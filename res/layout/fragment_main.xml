@@ -1,0 +1,187 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="comproject.leccontroller.MainActivity$PlaceholderFragment" >
+
+    <TextView
+        android:id="@+id/txt_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/hello_world" />
+
+    <TextView
+        android:id="@+id/txt_G"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txt_title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="G"
+        android:textSize="@dimen/RGB_text_size" />
+
+    <TextView
+        android:id="@+id/txt_R"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/txt_G"
+        android:layout_marginRight="45dp"
+        android:layout_toLeftOf="@+id/txt_G"
+        android:text="R"
+        android:textSize="@dimen/RGB_text_size" />
+
+    <EditText
+        android:id="@+id/edt_G"
+        android:layout_width="55dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txt_G"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:background="#AA00AA00"
+        android:ems="10"
+        android:inputType="number"
+        android:maxLength="3" >
+
+    </EditText>
+
+    <TextView
+        android:id="@+id/txt_B"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/edt_G"
+        android:layout_marginLeft="45dp"
+        android:layout_toRightOf="@+id/txt_G"
+        android:text="B"
+        android:textSize="@dimen/RGB_text_size" />
+
+    <EditText
+        android:id="@+id/edt_B"
+        android:layout_width="55dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/edt_G"
+        android:layout_alignBottom="@+id/edt_G"
+        android:layout_alignLeft="@+id/txt_B"
+        android:layout_toRightOf="@+id/edt_G"
+        android:background="#AA0000AA"
+        android:ems="10"
+        android:inputType="number"
+        android:maxLength="3" />
+
+    <EditText
+        android:id="@+id/edt_R"
+        android:layout_width="55dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/edt_G"
+        android:layout_alignBottom="@+id/edt_G"
+        android:layout_alignRight="@+id/txt_R"
+        android:background="#AAAA0000"
+        android:ems="10"
+        android:inputType="number"
+        android:maxLength="3" />
+
+    <SeekBar
+        android:id="@+id/skb_G"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/skb_R"
+        android:layout_marginTop="15dp"
+        android:max="255" />
+
+    <SeekBar
+        android:id="@+id/skb_B"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/skb_G"
+        android:layout_marginTop="15dp"
+        android:max="255" />
+
+    <SeekBar
+        android:id="@+id/skb_R"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/view_color"
+        android:layout_marginTop="20dp"
+        android:max="255" />
+
+    <View
+        android:id="@+id/view_color"
+        android:layout_width="280dp"
+        android:layout_height="50dp"
+        android:layout_alignLeft="@+id/skb_R"
+        android:layout_alignRight="@+id/txt_B"
+        android:layout_below="@+id/edt_G"
+        android:layout_marginTop="15dp"
+        android:background="#000000" />
+
+    <Button
+        android:id="@+id/btn_confirm"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/view_color"
+        android:layout_alignRight="@+id/skb_R"
+        android:layout_toRightOf="@+id/txt_B"
+        android:text="Send" />
+
+    <Button
+        android:id="@+id/btn_hk1"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/tgb_OnOff"
+        android:layout_alignBottom="@+id/tgb_OnOff"
+        android:layout_alignLeft="@+id/skb_B"
+        android:text="Key1" />
+
+    <Button
+        android:id="@+id/btn_hk2"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btn_hk1"
+        android:layout_alignBottom="@+id/btn_hk1"
+        android:layout_toRightOf="@+id/btn_hk1"
+        android:text="Key2" />
+
+    <Button
+        android:id="@+id/btn_hk3"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btn_hk2"
+        android:layout_alignBottom="@+id/btn_hk2"
+        android:layout_toRightOf="@+id/btn_hk2"
+        android:text="Key3" />
+
+    <ToggleButton
+        android:id="@+id/tgb_OnOff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/btn_confirm"
+        android:layout_alignRight="@+id/skb_B"
+        android:layout_below="@+id/skb_B"
+        android:layout_marginTop="15dp"
+        android:checked="false"
+        android:clickable="false"
+        android:text="ToggleButton" />
+
+    <Button
+        android:id="@+id/btn_set"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/btn_hk1"
+        android:layout_alignRight="@+id/btn_hk3"
+        android:layout_below="@+id/btn_hk2"
+        android:text="Set" />
+
+</RelativeLayout>
