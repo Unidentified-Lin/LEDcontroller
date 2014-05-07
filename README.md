@@ -1,7 +1,8 @@
 LEDcontroller
 =============
 
-LED color control
+---------------
+LED color control - Stage 1
 Can:
   1. pick color(EditText or SeekBar):
       + set to hotkey 1 to 3
@@ -9,3 +10,5 @@ Can:
       + show the color on showing area
   2. On/Off the LED light
   3. Store the color to data base
+
+---------------
