@@ -62,7 +62,6 @@ public class MainActivity extends ActionBarActivity {
 	private static final int REQUEST_ENABLE_BT = 1;
 
 	private BluetoothAdapter mBluetoothAdapter;
-	private BluetoothSocket mBluetoothSocket;
 	private SparseArray<BluetoothDevice> mDevices;
 	private Set<BluetoothDevice> pairedDevices;
 
