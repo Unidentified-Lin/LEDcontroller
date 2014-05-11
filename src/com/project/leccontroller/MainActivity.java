@@ -184,7 +184,7 @@ public class MainActivity extends ActionBarActivity {
 			BluetoothDevice device = mDevices.get(item.getItemId());
 			Log.i(TAG, "Connecting to " + device.getName());
 
-			//Make a connection with the device
+			// Make a connection with the device
 			mConnectService.connect(device);
 			// Display progress UI
 			mHandler.sendMessage(Message.obtain(null, MSG_PROGRESS,
@@ -226,7 +226,6 @@ public class MainActivity extends ActionBarActivity {
 			startScan();
 		}
 	};
-	
 
 	private void startScan() {
 		// Register the BroadcastReceiver
@@ -386,7 +385,10 @@ public class MainActivity extends ActionBarActivity {
 			Button btn_hk2 = (Button) rootView.findViewById(R.id.btn_hk2);
 			Button btn_hk3 = (Button) rootView.findViewById(R.id.btn_hk3);
 			Button btn_set = (Button) rootView.findViewById(R.id.btn_set);
-			
+
+			Button btn_open = (Button) rootView.findViewById(R.id.btn_open);
+			Button btn_save = (Button) rootView.findViewById(R.id.btn_save);
+
 			// 點選文字欄位清除內容
 			OnFocusChangeListener OFCL = new OnFocusChangeListener() {
 
@@ -689,6 +691,17 @@ public class MainActivity extends ActionBarActivity {
 			btn_hk2.setOnClickListener(HK_OCL);
 			btn_hk3.setOnClickListener(HK_OCL);
 			btn_set.setOnClickListener(HK_OCL);
+			
+			OnClickListener OpenSave_OCL = new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					
+				}
+			};
+			btn_open.setOnClickListener(OpenSave_OCL);
+			btn_save.setOnClickListener(OpenSave_OCL);
 
 			return rootView;
 		}
