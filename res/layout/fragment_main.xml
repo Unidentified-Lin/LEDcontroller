@@ -137,9 +137,9 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/tgb_OnOff"
-        android:layout_alignBottom="@+id/tgb_OnOff"
         android:layout_alignLeft="@+id/skb_B"
+        android:layout_below="@+id/skb_B"
+        android:layout_marginTop="15dp"
         android:text="Key1" />
 
     <Button
@@ -162,18 +162,6 @@
         android:layout_toRightOf="@+id/btn_hk2"
         android:text="Key3" />
 
-    <ToggleButton
-        android:id="@+id/tgb_OnOff"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/btn_confirm"
-        android:layout_alignRight="@+id/skb_B"
-        android:layout_below="@+id/skb_B"
-        android:layout_marginTop="15dp"
-        android:checked="false"
-        android:clickable="false"
-        android:text="ToggleButton" />
-
     <Button
         android:id="@+id/btn_set"
         style="?android:attr/buttonStyleSmall"
@@ -183,5 +171,37 @@
         android:layout_alignRight="@+id/btn_hk3"
         android:layout_below="@+id/btn_hk2"
         android:text="Set" />
+
+    <Button
+        android:id="@+id/btn_save"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btn_hk3"
+        android:layout_alignBottom="@+id/btn_hk3"
+        android:layout_alignRight="@+id/skb_B"
+        android:text="Save" />
+
+    <Button
+        android:id="@+id/btn_open"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btn_save"
+        android:layout_alignBottom="@+id/btn_save"
+        android:layout_toLeftOf="@+id/btn_save"
+        android:text="Open" />
+
+    <ToggleButton
+        android:id="@+id/tgb_OnOff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btn_set"
+        android:layout_alignBottom="@+id/btn_set"
+        android:layout_alignLeft="@+id/btn_open"
+        android:layout_alignRight="@+id/btn_save"
+        android:checked="false"
+        android:clickable="false"
+        android:text="ToggleButton" />
 
 </RelativeLayout>

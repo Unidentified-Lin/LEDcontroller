@@ -386,7 +386,7 @@ public class MainActivity extends ActionBarActivity {
 			Button btn_hk2 = (Button) rootView.findViewById(R.id.btn_hk2);
 			Button btn_hk3 = (Button) rootView.findViewById(R.id.btn_hk3);
 			Button btn_set = (Button) rootView.findViewById(R.id.btn_set);
-
+			
 			// 點選文字欄位清除內容
 			OnFocusChangeListener OFCL = new OnFocusChangeListener() {
 
