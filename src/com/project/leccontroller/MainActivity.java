@@ -4,6 +4,9 @@ import java.util.Set;
 
 import com.project.leccontroller.R;
 
+import com.project.leccontroller.DataBaseHelper;
+import static com.project.leccontroller.DataBaseHelper.*;
+
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -22,6 +25,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -64,10 +68,12 @@ public class MainActivity extends ActionBarActivity {
 	private BluetoothAdapter mBluetoothAdapter;
 	private SparseArray<BluetoothDevice> mDevices;
 	private Set<BluetoothDevice> pairedDevices;
-
 	private BluetoothConnectService mConnectService = null;
 
 	private ProgressDialog mProgress;
+	
+	DataBaseHelper DBhelper;
+	private String [] colorNameArray, RedArray, GreenArray, BlueArray;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +81,8 @@ public class MainActivity extends ActionBarActivity {
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.activity_main);
 		setProgressBarIndeterminate(true);
+		
+		DBhelper = new DataBaseHelper(this);
 
 		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
@@ -337,6 +345,26 @@ public class MainActivity extends ActionBarActivity {
 
 	}
 
+	private void getBasicInfo() {
+		DBhelper.openDataBase(this);
+		Cursor c = DBhelper.select(DATABASE_TABLE_1, new String[] {COLUMN_NAME_1, COLUMN_RED_1, COLUMN_GREEN_1, COLUMN_BLUE_1}, null, null, COLUMN_ID_1);
+		int colorNameIndex = c.getColumnIndex(COLUMN_NAME_1);
+		int RedIndex = c.getColumnIndex(COLUMN_RED_1);
+		int GreenIndex = c.getColumnIndex(COLUMN_GREEN_1);
+		int BlueIndex = c.getColumnIndex(COLUMN_BLUE_1);
+		int i = 0;
+		for(c.moveToFirst(); !(c.isAfterLast()); c.moveToNext()){
+			colorNameArray[i] = c.getString(colorNameIndex);
+			RedArray[i] = c.getString(RedIndex);
+			GreenArray[i] = c.getString(GreenIndex);
+			BlueArray[i] = c.getString(BlueIndex);
+			i++;
+		}
+		c.close();
+		DBhelper.close();
+		
+	}
+	
 	/**
 	 * A placeholder fragment containing a simple view.
 	 */

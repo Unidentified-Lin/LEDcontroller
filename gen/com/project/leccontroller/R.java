@@ -1098,11 +1098,11 @@ containing a value of this type.
         public static final int beginning=0x7f050011;
         public static final int btn_confirm=0x7f050048;
         public static final int btn_hk1=0x7f050049;
-        public static final int btn_hk2=0x7f05004b;
-        public static final int btn_hk3=0x7f05004c;
-        public static final int btn_open=0x7f05004f;
-        public static final int btn_save=0x7f05004e;
-        public static final int btn_set=0x7f05004d;
+        public static final int btn_hk2=0x7f05004a;
+        public static final int btn_hk3=0x7f05004b;
+        public static final int btn_open=0x7f05004e;
+        public static final int btn_save=0x7f05004d;
+        public static final int btn_set=0x7f05004c;
         public static final int checkbox=0x7f05002d;
         public static final int collapseActionView=0x7f05000d;
         public static final int container=0x7f05003c;
@@ -1151,7 +1151,7 @@ containing a value of this type.
         public static final int split_action_bar=0x7f05001e;
         public static final int submit_area=0x7f050039;
         public static final int tabMode=0x7f050002;
-        public static final int tgb_OnOff=0x7f05004a;
+        public static final int tgb_OnOff=0x7f05004f;
         public static final int title=0x7f05002b;
         public static final int top_action_bar=0x7f050020;
         public static final int txt_B=0x7f050041;
