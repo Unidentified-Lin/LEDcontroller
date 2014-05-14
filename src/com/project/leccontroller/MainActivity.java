@@ -71,9 +71,10 @@ public class MainActivity extends ActionBarActivity {
 	private BluetoothConnectService mConnectService = null;
 
 	private ProgressDialog mProgress;
-	
+	private Boolean isScanning = false;
+
 	DataBaseHelper DBhelper;
-	private String [] colorNameArray, RedArray, GreenArray, BlueArray;
+	private String[] colorNameArray, RedArray, GreenArray, BlueArray;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +82,7 @@ public class MainActivity extends ActionBarActivity {
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.activity_main);
 		setProgressBarIndeterminate(true);
-		
+
 		DBhelper = new DataBaseHelper(this);
 
 		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -169,6 +170,7 @@ public class MainActivity extends ActionBarActivity {
 
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
+
 		// Add any device elements we've discovered to the overflow menu
 		for (int i = 0; i < mDevices.size(); i++) {
 			BluetoothDevice device = mDevices.valueAt(i);
@@ -183,10 +185,19 @@ public class MainActivity extends ActionBarActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.action_scan:
-			item.setEnabled(false);
-			mDevices.clear();
-			startScan();
-			return true;
+			if (isScanning) {
+				Log.i("Scan select",
+						"mProgress is scanning, can't do it again.");
+				return false;
+			} else {
+				Log.i("Scan select", "mProgress is not scanning. Scan!!!");
+				isScanning = true;
+				// item.setEnabled(false);
+				mDevices.clear();
+				startScan();
+				return true;
+			}
+
 		default:
 			// // Obtain the discovered device to connect with
 			BluetoothDevice device = mDevices.get(item.getItemId());
@@ -249,6 +260,7 @@ public class MainActivity extends ActionBarActivity {
 
 	private void stopScan() {
 		Log.i(TAG, "Stop scan");
+		isScanning = false;
 		unregisterReceiver(mReceiver);
 		mBluetoothAdapter.cancelDiscovery();
 		setProgressBarIndeterminateVisibility(false);
@@ -279,7 +291,6 @@ public class MainActivity extends ActionBarActivity {
 				Log.i("device.hashCode()", "" + device.hashCode());
 				// Update the overflow menu
 				supportInvalidateOptionsMenu();
-				// }
 			}
 		}
 
@@ -347,13 +358,15 @@ public class MainActivity extends ActionBarActivity {
 
 	private void getBasicInfo() {
 		DBhelper.openDataBase(this);
-		Cursor c = DBhelper.select(DATABASE_TABLE_1, new String[] {COLUMN_NAME_1, COLUMN_RED_1, COLUMN_GREEN_1, COLUMN_BLUE_1}, null, null, COLUMN_ID_1);
+		Cursor c = DBhelper.select(DATABASE_TABLE_1, new String[] {
+				COLUMN_NAME_1, COLUMN_RED_1, COLUMN_GREEN_1, COLUMN_BLUE_1 },
+				null, null, COLUMN_ID_1);
 		int colorNameIndex = c.getColumnIndex(COLUMN_NAME_1);
 		int RedIndex = c.getColumnIndex(COLUMN_RED_1);
 		int GreenIndex = c.getColumnIndex(COLUMN_GREEN_1);
 		int BlueIndex = c.getColumnIndex(COLUMN_BLUE_1);
 		int i = 0;
-		for(c.moveToFirst(); !(c.isAfterLast()); c.moveToNext()){
+		for (c.moveToFirst(); !(c.isAfterLast()); c.moveToNext()) {
 			colorNameArray[i] = c.getString(colorNameIndex);
 			RedArray[i] = c.getString(RedIndex);
 			GreenArray[i] = c.getString(GreenIndex);
@@ -362,9 +375,9 @@ public class MainActivity extends ActionBarActivity {
 		}
 		c.close();
 		DBhelper.close();
-		
+
 	}
-	
+
 	/**
 	 * A placeholder fragment containing a simple view.
 	 */
@@ -719,13 +732,13 @@ public class MainActivity extends ActionBarActivity {
 			btn_hk2.setOnClickListener(HK_OCL);
 			btn_hk3.setOnClickListener(HK_OCL);
 			btn_set.setOnClickListener(HK_OCL);
-			
+
 			OnClickListener OpenSave_OCL = new OnClickListener() {
-				
+
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
-					
+
 				}
 			};
 			btn_open.setOnClickListener(OpenSave_OCL);
