@@ -1,35 +1,34 @@
 package com.project.leccontroller;
 
+import static com.project.leccontroller.DataBaseHelper.COLUMN_BLUE_1;
+import static com.project.leccontroller.DataBaseHelper.COLUMN_GREEN_1;
+import static com.project.leccontroller.DataBaseHelper.COLUMN_ID_1;
+import static com.project.leccontroller.DataBaseHelper.COLUMN_NAME_1;
+import static com.project.leccontroller.DataBaseHelper.COLUMN_RED_1;
+import static com.project.leccontroller.DataBaseHelper.DATABASE_TABLE_1;
+
 import java.util.Set;
-
-import com.project.leccontroller.R;
-
-import com.project.leccontroller.DataBaseHelper;
-import static com.project.leccontroller.DataBaseHelper.*;
-
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-
-import android.bluetooth.BluetoothSocket;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.KeyEvent;
@@ -37,10 +36,10 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -52,7 +51,6 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 import android.widget.ToggleButton;
-import android.os.Build;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -71,6 +69,7 @@ public class MainActivity extends ActionBarActivity {
 	private BluetoothConnectService mConnectService = null;
 
 	private ProgressDialog mProgress;
+	private static Dialog mSaveDialog, mOpenDialog;
 	private Boolean isScanning = false;
 
 	DataBaseHelper DBhelper;
@@ -733,12 +732,68 @@ public class MainActivity extends ActionBarActivity {
 			btn_hk3.setOnClickListener(HK_OCL);
 			btn_set.setOnClickListener(HK_OCL);
 
+			final OnClickListener dlg_s_Click = new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					switch (v.getId()) {
+					case R.id.dialog_s_btn_confirm:
+						Toast toast = Toast.makeText(
+								(MainActivity) getActivity(), "Save to DB",
+								Toast.LENGTH_SHORT);
+						toast.show();
+						break;
+					case R.id.dialog_s_btn_cancel:
+						mSaveDialog.dismiss();
+						break;
+					}
+				}
+			};
+
 			OnClickListener OpenSave_OCL = new OnClickListener() {
 
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
+					switch (v.getId()) {
+					case R.id.btn_open:
+						break;
+					case R.id.btn_save:
+						int save_r = Integer.parseInt(edt_R.getText()
+								.toString());
+						int save_g = Integer.parseInt(edt_G.getText()
+								.toString());
+						int save_b = Integer.parseInt(edt_B.getText()
+								.toString());
 
+						mSaveDialog = new Dialog((MainActivity) getActivity());
+						mSaveDialog.setTitle(R.string.dialog_save_title);
+						mSaveDialog.setCancelable(false);
+						mSaveDialog.setContentView(R.layout.dialog_db_save);
+
+						EditText dialog_s_edt_name = (EditText) mSaveDialog
+								.findViewById(R.id.dialog_s_edt_name);
+						View dialog_s_view_color = (View) mSaveDialog
+								.findViewById(R.id.dialog_s_view_color);
+						TextView dialog_s_txt_rgb = (TextView) mSaveDialog
+								.findViewById(R.id.dialog_s_txt_rgb);
+						Button dialog_s_btn_confirm = (Button) mSaveDialog
+								.findViewById(R.id.dialog_s_btn_confirm);
+						Button dialog_s_btn_cancel = (Button) mSaveDialog
+								.findViewById(R.id.dialog_s_btn_cancel);
+
+						dialog_s_view_color.setBackgroundColor(Color.rgb(
+								save_r, save_g, save_b));
+						dialog_s_txt_rgb.setText("R: " + save_r + " | G: "
+								+ save_g + " | B: " + save_b);
+
+						dialog_s_btn_confirm.setOnClickListener(dlg_s_Click);
+						dialog_s_btn_cancel.setOnClickListener(dlg_s_Click);
+
+						mSaveDialog.show();
+
+					}
 				}
 			};
 			btn_open.setOnClickListener(OpenSave_OCL);

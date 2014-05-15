@@ -1111,8 +1111,8 @@ containing a value of this type.
         public static final int dialog_s_btn_cancel=0x7f050041;
         public static final int dialog_s_btn_confirm=0x7f050040;
         public static final int dialog_s_edt_name=0x7f05003d;
-        public static final int dialog_s_txt_rgb=0x7f05003e;
-        public static final int dialog_s_view_color=0x7f05003f;
+        public static final int dialog_s_txt_rgb=0x7f05003f;
+        public static final int dialog_s_view_color=0x7f05003e;
         public static final int disableHome=0x7f050008;
         public static final int dropdown=0x7f05000f;
         public static final int edit_query=0x7f050030;
@@ -1219,7 +1219,7 @@ containing a value of this type.
         public static final int abc_search_view=0x7f030016;
         public static final int abc_simple_decor=0x7f030017;
         public static final int activity_main=0x7f030018;
-        public static final int db_save_dialog=0x7f030019;
+        public static final int dialog_db_save=0x7f030019;
         public static final int fragment_main=0x7f03001a;
         public static final int support_simple_spinner_dropdown_item=0x7f03001b;
     }
@@ -1268,6 +1268,7 @@ containing a value of this type.
          */
         public static final int abc_shareactionprovider_share_with_application=0x7f0a000b;
         public static final int app_name=0x7f0a000d;
+        public static final int dialog_save_title=0x7f0a000f;
         public static final int hello_world=0x7f0a000e;
     }
     public static final class style {
