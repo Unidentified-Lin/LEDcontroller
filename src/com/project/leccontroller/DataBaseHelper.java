@@ -33,9 +33,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		// 建立資料表 Create table.
 		db.execSQL("CREATE TABLE  IF NOT EXISTS " + DATABASE_TABLE_1 + " ("
 				+ COLUMN_ID_1 + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-				+ COLUMN_NAME_1 + " TEXT NOT NULL, " + COLUMN_RED_1
-				+ " INTEGER, " + COLUMN_GREEN_1 + " INTEGER, " + COLUMN_BLUE_1
-				+ " INTEGER);"
+				+ COLUMN_NAME_1 + " TEXT NOT NULL, " 
+				+ COLUMN_RED_1 + " varchar NOT NULL, " 
+				+ COLUMN_GREEN_1 + " varchar NOT NULL, " 
+				+ COLUMN_BLUE_1 + " varchar NOT NULL);"
 
 		);
 	}
@@ -45,7 +46,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		// TODO Auto-generated method stub
 
 	}
-	
+
 	public void openDataBase(Context context) throws SQLException {
 		DBhelper = new DataBaseHelper(context);
 		db = DBhelper.getWritableDatabase();

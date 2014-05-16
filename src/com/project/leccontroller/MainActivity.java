@@ -574,8 +574,7 @@ public class MainActivity extends ActionBarActivity {
 						gg = Integer.parseInt(g);
 					} catch (Exception e) {
 						goodToGo = false;
-						Toast toast = Toast.makeText(
-								(MainActivity) getActivity(), "©|¥¼¶ñ§´ÃC¦â",
+						Toast toast = Toast.makeText(getActivity(), "©|¥¼¶ñ§´ÃC¦â",
 								Toast.LENGTH_LONG);
 						toast.show();
 
@@ -606,9 +605,8 @@ public class MainActivity extends ActionBarActivity {
 								+ last_b;
 						((MainActivity) getActivity())
 								.sendMessage(messageToSend);
-						Toast toDevice = Toast.makeText(
-								(MainActivity) getActivity(), messageToSend,
-								Toast.LENGTH_SHORT);
+						Toast toDevice = Toast.makeText(getActivity(),
+								messageToSend, Toast.LENGTH_SHORT);
 						toDevice.show();
 						tgb_OnOff.setChecked(true);
 						tgb_OnOff.setClickable(true);
@@ -628,16 +626,14 @@ public class MainActivity extends ActionBarActivity {
 							+ last_b;
 					// TODO Auto-generated method stub
 					if (isChecked) {
-						Toast toDevice = Toast.makeText(
-								(MainActivity) getActivity(), messageToSend,
-								Toast.LENGTH_SHORT);
+						Toast toDevice = Toast.makeText(getActivity(),
+								messageToSend, Toast.LENGTH_SHORT);
 						toDevice.show();
 					} else {
 						((MainActivity) getActivity())
 								.sendMessage(messageToSend);
-						Toast toDevice = Toast.makeText(
-								(MainActivity) getActivity(), messageToSend,
-								Toast.LENGTH_SHORT);
+						Toast toDevice = Toast.makeText(getActivity(),
+								messageToSend, Toast.LENGTH_SHORT);
 						toDevice.show();
 					}
 				}
@@ -693,7 +689,7 @@ public class MainActivity extends ActionBarActivity {
 						Log.i("SetButton", "it's work");
 						String[] items = { "Hotkey1", "Hotkey2", "Hotkey3" };
 						AlertDialog.Builder adBuilder = new AlertDialog.Builder(
-								(MainActivity) getActivity());
+								getActivity());
 						adBuilder.setTitle("Set Hotkey");
 						adBuilder.setItems(items, adSetListener);
 						adBuilder.setNegativeButton("Cancel", null);
@@ -732,25 +728,6 @@ public class MainActivity extends ActionBarActivity {
 			btn_hk3.setOnClickListener(HK_OCL);
 			btn_set.setOnClickListener(HK_OCL);
 
-			final OnClickListener dlg_s_Click = new OnClickListener() {
-
-				@Override
-				public void onClick(View v) {
-					// TODO Auto-generated method stub
-					switch (v.getId()) {
-					case R.id.dialog_s_btn_confirm:
-						Toast toast = Toast.makeText(
-								(MainActivity) getActivity(), "Save to DB",
-								Toast.LENGTH_SHORT);
-						toast.show();
-						break;
-					case R.id.dialog_s_btn_cancel:
-						mSaveDialog.dismiss();
-						break;
-					}
-				}
-			};
-
 			OnClickListener OpenSave_OCL = new OnClickListener() {
 
 				@Override
@@ -767,12 +744,12 @@ public class MainActivity extends ActionBarActivity {
 						int save_b = Integer.parseInt(edt_B.getText()
 								.toString());
 
-						mSaveDialog = new Dialog((MainActivity) getActivity());
+						mSaveDialog = new Dialog(getActivity());
 						mSaveDialog.setTitle(R.string.dialog_save_title);
 						mSaveDialog.setCancelable(false);
 						mSaveDialog.setContentView(R.layout.dialog_db_save);
 
-						EditText dialog_s_edt_name = (EditText) mSaveDialog
+						final EditText dialog_s_edt_name = (EditText) mSaveDialog
 								.findViewById(R.id.dialog_s_edt_name);
 						View dialog_s_view_color = (View) mSaveDialog
 								.findViewById(R.id.dialog_s_view_color);
@@ -788,8 +765,56 @@ public class MainActivity extends ActionBarActivity {
 						dialog_s_txt_rgb.setText("R: " + save_r + " | G: "
 								+ save_g + " | B: " + save_b);
 
-						dialog_s_btn_confirm.setOnClickListener(dlg_s_Click);
-						dialog_s_btn_cancel.setOnClickListener(dlg_s_Click);
+						dialog_s_btn_confirm.setOnClickListener(new OnClickListener() {
+
+									@Override
+									public void onClick(View v) {
+										// TODO Auto-generated method stub
+										switch (v.getId()){
+										case R.id.dialog_s_btn_confirm:
+											String name = dialog_s_edt_name.getText().toString();
+											if (name.equals("")){
+												Toast emptyName = Toast.makeText(
+														getActivity(), "Have to input name!",
+														Toast.LENGTH_SHORT);
+												emptyName.show();
+												break;
+											}
+											String red = edt_R.getText().toString();
+											String green = edt_G.getText().toString();
+											String blue = edt_B.getText().toString();
+
+											String[] columnsValue = { name, red, green, blue };
+
+											DataBaseHelper DBhelper = new DataBaseHelper(
+													getActivity());
+											DBhelper.openDataBase(getActivity());
+											try{
+												DBhelper.insert(DATABASE_TABLE_1, columnsValue);
+												Toast SuccessToast = Toast.makeText(
+														getActivity(), "Saving Successful!",
+														Toast.LENGTH_SHORT);
+												SuccessToast.show();
+											}catch(Exception e){
+												e.printStackTrace();
+												Toast ErrorToast = Toast.makeText(
+														getActivity(), "Saving DB Error!",
+														Toast.LENGTH_SHORT);
+												ErrorToast.show();
+											}
+											DBhelper.close();
+											mSaveDialog.dismiss();
+										}
+									}
+								});
+						dialog_s_btn_cancel.setOnClickListener(new OnClickListener() {
+							
+							@Override
+							public void onClick(View v) {
+								// TODO Auto-generated method stub
+								mSaveDialog.dismiss();
+							}
+						});
 
 						mSaveDialog.show();
 
