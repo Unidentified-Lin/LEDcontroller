@@ -4,5 +4,6 @@
     <string name="app_name">LED</string>
     <string name="hello_world">Hello world!</string>
     <string name="dialog_save_title">Saving color value</string>
+    <string name="dialog_open_title">Color in db</string>
 
 </resources>
