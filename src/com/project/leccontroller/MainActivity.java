@@ -719,7 +719,10 @@ public class MainActivity extends ActionBarActivity {
 			btn_set.setOnClickListener(HK_OCL);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 			//資料庫開起儲存
+=======
+>>>>>>> 25a4549224f29a45337d80036ec067770ddb4c28
 =======
 >>>>>>> 25a4549224f29a45337d80036ec067770ddb4c28
 			OnClickListener OpenSave_OCL = new OnClickListener() {
@@ -762,8 +765,12 @@ public class MainActivity extends ActionBarActivity {
 								+ save_g + " | B: " + save_b);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 						dialog_s_btn_confirm
 								.setOnClickListener(new OnClickListener() {
+=======
+						dialog_s_btn_confirm.setOnClickListener(new OnClickListener() {
+>>>>>>> 25a4549224f29a45337d80036ec067770ddb4c28
 =======
 						dialog_s_btn_confirm.setOnClickListener(new OnClickListener() {
 >>>>>>> 25a4549224f29a45337d80036ec067770ddb4c28
@@ -771,6 +778,7 @@ public class MainActivity extends ActionBarActivity {
 									@Override
 									public void onClick(View v) {
 										// TODO Auto-generated method stub
+<<<<<<< HEAD
 <<<<<<< HEAD
 										switch (v.getId()) {
 										case R.id.dialog_s_btn_confirm:
@@ -795,6 +803,8 @@ public class MainActivity extends ActionBarActivity {
 											String[] columnsValue = { name,
 													red, green, blue };
 =======
+=======
+>>>>>>> 25a4549224f29a45337d80036ec067770ddb4c28
 										switch (v.getId()){
 										case R.id.dialog_s_btn_confirm:
 											String name = dialog_s_edt_name.getText().toString();
@@ -810,11 +820,15 @@ public class MainActivity extends ActionBarActivity {
 											String blue = edt_B.getText().toString();
 
 											String[] columnsValue = { name, red, green, blue };
+<<<<<<< HEAD
+>>>>>>> 25a4549224f29a45337d80036ec067770ddb4c28
+=======
 >>>>>>> 25a4549224f29a45337d80036ec067770ddb4c28
 
 											DataBaseHelper DBhelper = new DataBaseHelper(
 													getActivity());
 											DBhelper.openDataBase(getActivity());
+<<<<<<< HEAD
 <<<<<<< HEAD
 											try {
 												DBhelper.insert(
@@ -834,6 +848,8 @@ public class MainActivity extends ActionBarActivity {
 																"Saving DB Error!",
 																Toast.LENGTH_SHORT);
 =======
+=======
+>>>>>>> 25a4549224f29a45337d80036ec067770ddb4c28
 											try{
 												DBhelper.insert(DATABASE_TABLE_1, columnsValue);
 												Toast SuccessToast = Toast.makeText(
@@ -845,6 +861,9 @@ public class MainActivity extends ActionBarActivity {
 												Toast ErrorToast = Toast.makeText(
 														getActivity(), "Saving DB Error!",
 														Toast.LENGTH_SHORT);
+<<<<<<< HEAD
+>>>>>>> 25a4549224f29a45337d80036ec067770ddb4c28
+=======
 >>>>>>> 25a4549224f29a45337d80036ec067770ddb4c28
 												ErrorToast.show();
 											}
@@ -853,6 +872,7 @@ public class MainActivity extends ActionBarActivity {
 										}
 									}
 								});
+<<<<<<< HEAD
 <<<<<<< HEAD
 						dialog_s_btn_cancel
 								.setOnClickListener(new OnClickListener() {
@@ -864,6 +884,8 @@ public class MainActivity extends ActionBarActivity {
 									}
 								});
 =======
+=======
+>>>>>>> 25a4549224f29a45337d80036ec067770ddb4c28
 						dialog_s_btn_cancel.setOnClickListener(new OnClickListener() {
 							
 							@Override
@@ -872,6 +894,9 @@ public class MainActivity extends ActionBarActivity {
 								mSaveDialog.dismiss();
 							}
 						});
+<<<<<<< HEAD
+>>>>>>> 25a4549224f29a45337d80036ec067770ddb4c28
+=======
 >>>>>>> 25a4549224f29a45337d80036ec067770ddb4c28
 
 						mSaveDialog.show();
