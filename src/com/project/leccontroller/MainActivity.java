@@ -22,6 +22,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -31,6 +32,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.util.SparseArray;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -39,12 +41,16 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.view.inputmethod.EditorInfo;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
@@ -73,11 +79,13 @@ public class MainActivity extends ActionBarActivity {
 	private Boolean isScanning = false;
 
 	DataBaseHelper DBhelper;
-	private String[] colorNameArray, RedArray, GreenArray, BlueArray;
+	String[] colorNameArray, RedArray, GreenArray, BlueArray;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Log.i("onCreate","onCreate");
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.activity_main);
 		setProgressBarIndeterminate(true);
@@ -103,6 +111,7 @@ public class MainActivity extends ActionBarActivity {
 	@Override
 	public void onStart() {
 		super.onStart();
+		Log.i("onStart","onStart");
 		if (D)
 			Log.e(TAG, "++ ON START ++");
 		/*
@@ -137,8 +146,9 @@ public class MainActivity extends ActionBarActivity {
 
 	@Override
 	protected void onResume() {
+		Log.i("OnResume","OnResume");
+//		settingChange();
 		super.onResume();
-
 	}
 
 	@Override
@@ -355,28 +365,6 @@ public class MainActivity extends ActionBarActivity {
 
 	}
 
-	private void getBasicInfo() {
-		DBhelper.openDataBase(this);
-		Cursor c = DBhelper.select(DATABASE_TABLE_1, new String[] {
-				COLUMN_NAME_1, COLUMN_RED_1, COLUMN_GREEN_1, COLUMN_BLUE_1 },
-				null, null, COLUMN_ID_1);
-		int colorNameIndex = c.getColumnIndex(COLUMN_NAME_1);
-		int RedIndex = c.getColumnIndex(COLUMN_RED_1);
-		int GreenIndex = c.getColumnIndex(COLUMN_GREEN_1);
-		int BlueIndex = c.getColumnIndex(COLUMN_BLUE_1);
-		int i = 0;
-		for (c.moveToFirst(); !(c.isAfterLast()); c.moveToNext()) {
-			colorNameArray[i] = c.getString(colorNameIndex);
-			RedArray[i] = c.getString(RedIndex);
-			GreenArray[i] = c.getString(GreenIndex);
-			BlueArray[i] = c.getString(BlueIndex);
-			i++;
-		}
-		c.close();
-		DBhelper.close();
-
-	}
-
 	/**
 	 * A placeholder fragment containing a simple view.
 	 */
@@ -574,8 +562,7 @@ public class MainActivity extends ActionBarActivity {
 						gg = Integer.parseInt(g);
 					} catch (Exception e) {
 						goodToGo = false;
-						Toast toast = Toast.makeText(
-								(MainActivity) getActivity(), "尚未填妥顏色",
+						Toast toast = Toast.makeText(getActivity(), "尚未填妥顏色",
 								Toast.LENGTH_LONG);
 						toast.show();
 
@@ -606,9 +593,8 @@ public class MainActivity extends ActionBarActivity {
 								+ last_b;
 						((MainActivity) getActivity())
 								.sendMessage(messageToSend);
-						Toast toDevice = Toast.makeText(
-								(MainActivity) getActivity(), messageToSend,
-								Toast.LENGTH_SHORT);
+						Toast toDevice = Toast.makeText(getActivity(),
+								messageToSend, Toast.LENGTH_SHORT);
 						toDevice.show();
 						tgb_OnOff.setChecked(true);
 						tgb_OnOff.setClickable(true);
@@ -619,6 +605,7 @@ public class MainActivity extends ActionBarActivity {
 			};
 			btn_confirm.setOnClickListener(confirmListener);
 
+			//暗亮開關
 			OnCheckedChangeListener OnOffListener = new OnCheckedChangeListener() {
 
 				@Override
@@ -628,22 +615,21 @@ public class MainActivity extends ActionBarActivity {
 							+ last_b;
 					// TODO Auto-generated method stub
 					if (isChecked) {
-						Toast toDevice = Toast.makeText(
-								(MainActivity) getActivity(), messageToSend,
-								Toast.LENGTH_SHORT);
+						Toast toDevice = Toast.makeText(getActivity(),
+								messageToSend, Toast.LENGTH_SHORT);
 						toDevice.show();
 					} else {
 						((MainActivity) getActivity())
 								.sendMessage(messageToSend);
-						Toast toDevice = Toast.makeText(
-								(MainActivity) getActivity(), messageToSend,
-								Toast.LENGTH_SHORT);
+						Toast toDevice = Toast.makeText(getActivity(),
+								messageToSend, Toast.LENGTH_SHORT);
 						toDevice.show();
 					}
 				}
 			};
 			tgb_OnOff.setOnCheckedChangeListener(OnOffListener);
 
+			//快速鍵
 			OnClickListener HK_OCL = new OnClickListener() {
 
 				@Override
@@ -693,7 +679,7 @@ public class MainActivity extends ActionBarActivity {
 						Log.i("SetButton", "it's work");
 						String[] items = { "Hotkey1", "Hotkey2", "Hotkey3" };
 						AlertDialog.Builder adBuilder = new AlertDialog.Builder(
-								(MainActivity) getActivity());
+								getActivity());
 						adBuilder.setTitle("Set Hotkey");
 						adBuilder.setItems(items, adSetListener);
 						adBuilder.setNegativeButton("Cancel", null);
@@ -732,7 +718,17 @@ public class MainActivity extends ActionBarActivity {
 			btn_hk3.setOnClickListener(HK_OCL);
 			btn_set.setOnClickListener(HK_OCL);
 
+<<<<<<< HEAD
 			// 資料庫開起儲存
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+			//資料庫開起儲存
+=======
+>>>>>>> 25a4549224f29a45337d80036ec067770ddb4c28
+=======
+>>>>>>> 25a4549224f29a45337d80036ec067770ddb4c28
+>>>>>>> df3e7f381b4972a9b2452db5e157585a005113da
 			OnClickListener OpenSave_OCL = new OnClickListener() {
 
 				@Override
@@ -740,7 +736,9 @@ public class MainActivity extends ActionBarActivity {
 					// TODO Auto-generated method stub
 					switch (v.getId()) {
 					case R.id.btn_open:
+
 						break;
+
 					case R.id.btn_save:
 						int save_r = Integer.parseInt(edt_R.getText()
 								.toString());
@@ -749,7 +747,7 @@ public class MainActivity extends ActionBarActivity {
 						int save_b = Integer.parseInt(edt_B.getText()
 								.toString());
 
-						mSaveDialog = new Dialog((MainActivity) getActivity());
+						mSaveDialog = new Dialog(getActivity());
 						mSaveDialog.setTitle(R.string.dialog_save_title);
 						mSaveDialog.setCancelable(false);
 						mSaveDialog.setContentView(R.layout.dialog_db_save);
@@ -770,12 +768,30 @@ public class MainActivity extends ActionBarActivity {
 						dialog_s_txt_rgb.setText("R: " + save_r + " | G: "
 								+ save_g + " | B: " + save_b);
 
+<<<<<<< HEAD
 						dialog_s_btn_confirm
 								.setOnClickListener(new OnClickListener() {
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+						dialog_s_btn_confirm
+								.setOnClickListener(new OnClickListener() {
+=======
+						dialog_s_btn_confirm.setOnClickListener(new OnClickListener() {
+>>>>>>> 25a4549224f29a45337d80036ec067770ddb4c28
+=======
+						dialog_s_btn_confirm.setOnClickListener(new OnClickListener() {
+>>>>>>> 25a4549224f29a45337d80036ec067770ddb4c28
+>>>>>>> df3e7f381b4972a9b2452db5e157585a005113da
 
 									@Override
 									public void onClick(View v) {
 										// TODO Auto-generated method stub
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> df3e7f381b4972a9b2452db5e157585a005113da
 										switch (v.getId()) {
 										case R.id.dialog_s_btn_confirm:
 											String name = dialog_s_edt_name
@@ -798,11 +814,41 @@ public class MainActivity extends ActionBarActivity {
 
 											String[] columnsValue = { name,
 													red, green, blue };
+<<<<<<< HEAD
+=======
+=======
+=======
+>>>>>>> 25a4549224f29a45337d80036ec067770ddb4c28
+										switch (v.getId()){
+										case R.id.dialog_s_btn_confirm:
+											String name = dialog_s_edt_name.getText().toString();
+											if (name.equals("")){
+												Toast emptyName = Toast.makeText(
+														getActivity(), "Have to input name!",
+														Toast.LENGTH_SHORT);
+												emptyName.show();
+												break;
+											}
+											String red = edt_R.getText().toString();
+											String green = edt_G.getText().toString();
+											String blue = edt_B.getText().toString();
+
+											String[] columnsValue = { name, red, green, blue };
+<<<<<<< HEAD
+>>>>>>> 25a4549224f29a45337d80036ec067770ddb4c28
+=======
+>>>>>>> 25a4549224f29a45337d80036ec067770ddb4c28
+>>>>>>> df3e7f381b4972a9b2452db5e157585a005113da
 
 											DataBaseHelper DBhelper = new DataBaseHelper(
 													getActivity());
 											DBhelper.openDataBase(getActivity());
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> df3e7f381b4972a9b2452db5e157585a005113da
 											try {
 												DBhelper.insert(
 														DATABASE_TABLE_1,
@@ -820,6 +866,7 @@ public class MainActivity extends ActionBarActivity {
 																getActivity(),
 																"Saving DB Error!",
 																Toast.LENGTH_SHORT);
+<<<<<<< HEAD
 											}
 											try {
 												DBhelper.insert(
@@ -839,6 +886,26 @@ public class MainActivity extends ActionBarActivity {
 																"Saving DB Error!",
 																Toast.LENGTH_SHORT);
 
+=======
+=======
+=======
+>>>>>>> 25a4549224f29a45337d80036ec067770ddb4c28
+											try{
+												DBhelper.insert(DATABASE_TABLE_1, columnsValue);
+												Toast SuccessToast = Toast.makeText(
+														getActivity(), "Saving Successful!",
+														Toast.LENGTH_SHORT);
+												SuccessToast.show();
+											}catch(Exception e){
+												e.printStackTrace();
+												Toast ErrorToast = Toast.makeText(
+														getActivity(), "Saving DB Error!",
+														Toast.LENGTH_SHORT);
+<<<<<<< HEAD
+>>>>>>> 25a4549224f29a45337d80036ec067770ddb4c28
+=======
+>>>>>>> 25a4549224f29a45337d80036ec067770ddb4c28
+>>>>>>> df3e7f381b4972a9b2452db5e157585a005113da
 												ErrorToast.show();
 											}
 											DBhelper.close();
@@ -846,6 +913,11 @@ public class MainActivity extends ActionBarActivity {
 										}
 									}
 								});
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> df3e7f381b4972a9b2452db5e157585a005113da
 						dialog_s_btn_cancel
 								.setOnClickListener(new OnClickListener() {
 
@@ -855,6 +927,27 @@ public class MainActivity extends ActionBarActivity {
 										mSaveDialog.dismiss();
 									}
 								});
+<<<<<<< HEAD
+=======
+=======
+=======
+>>>>>>> 25a4549224f29a45337d80036ec067770ddb4c28
+						dialog_s_btn_cancel.setOnClickListener(new OnClickListener() {
+							
+							@Override
+							public void onClick(View v) {
+								// TODO Auto-generated method stub
+								mSaveDialog.dismiss();
+							}
+						});
+<<<<<<< HEAD
+>>>>>>> 25a4549224f29a45337d80036ec067770ddb4c28
+=======
+>>>>>>> 25a4549224f29a45337d80036ec067770ddb4c28
+
+						mSaveDialog.show();
+
+>>>>>>> df3e7f381b4972a9b2452db5e157585a005113da
 					}
 				}
 			};
