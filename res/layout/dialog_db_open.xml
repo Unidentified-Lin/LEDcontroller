@@ -16,6 +16,6 @@
         android:id="@+id/dialgo_o_btn_cancel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:text="Cancel" />
 
 </LinearLayout>

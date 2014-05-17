@@ -39,12 +39,18 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
@@ -71,9 +77,86 @@ public class MainActivity extends ActionBarActivity {
 	private ProgressDialog mProgress;
 	private static Dialog mSaveDialog, mOpenDialog;
 	private Boolean isScanning = false;
+	private Boolean isConnect = false;
 
 	DataBaseHelper DBhelper;
 	private String[] colorNameArray, RedArray, GreenArray, BlueArray;
+	BaseAdapter myAdapter = new BaseAdapter() {
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			// TODO Auto-generated method stub
+			LinearLayout verLayout = new LinearLayout(MainActivity.this);
+			verLayout.setOrientation(LinearLayout.VERTICAL);
+
+			LinearLayout horLayout = new LinearLayout(MainActivity.this);
+			horLayout.setOrientation(LinearLayout.HORIZONTAL);
+
+			TextView tv = new TextView(MainActivity.this);
+			tv.setText("[" + colorNameArray[position] + "] ");
+			tv.setTextSize(20);
+			tv.setTextColor(Color.BLACK);
+			tv.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT,
+					LayoutParams.WRAP_CONTENT));
+			// tv.setGravity(Gravity.CENTER_VERTICAL);
+
+			TextView tv1 = new TextView(MainActivity.this);
+			tv1.setText(RedArray[position] + " | ");
+			tv1.setTextSize(18);
+			tv1.setTextColor(Color.rgb(100, 100, 100));
+			tv1.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT,
+					LayoutParams.WRAP_CONTENT));
+			// tv2.setGravity(Gravity.BOTTOM | Gravity.RIGHT); //
+			// 設定TextView在父容器的位置
+
+			TextView tv2 = new TextView(MainActivity.this);
+			tv2.setText(GreenArray[position] + " | ");
+			tv2.setTextSize(18);
+			tv2.setTextColor(Color.rgb(100, 100, 100));
+			tv2.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT,
+					LayoutParams.WRAP_CONTENT));
+			// tv2.setGravity(Gravity.BOTTOM | Gravity.RIGHT); //
+			// 設定TextView在父容器的位置
+
+			TextView tv3 = new TextView(MainActivity.this);
+			tv3.setText(BlueArray[position]);
+			tv3.setTextSize(18);
+			tv3.setTextColor(Color.rgb(100, 100, 100));
+			tv3.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT,
+					LayoutParams.WRAP_CONTENT));
+			// tv2.setGravity(Gravity.BOTTOM | Gravity.RIGHT); //
+			// 設定TextView在父容器的位置
+
+			verLayout.addView(tv);
+			verLayout.addView(horLayout);
+			horLayout.addView(tv1);
+			horLayout.addView(tv2);
+			horLayout.addView(tv3);
+			return verLayout;
+		}
+
+		@Override
+		public long getItemId(int position) {
+			// TODO Auto-generated method stub
+			return 0;
+		}
+
+		@Override
+		public Object getItem(int position) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public int getCount() {
+			// TODO Auto-generated method stub
+			if (colorNameArray != null) {
+				return colorNameArray.length;
+			} else {
+				return 0;
+			}
+		}
+	};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -138,7 +221,7 @@ public class MainActivity extends ActionBarActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-
+		settingChange();
 	}
 
 	@Override
@@ -316,6 +399,11 @@ public class MainActivity extends ActionBarActivity {
 					break;
 				case BluetoothConnectService.STATE_CONNECTED:
 					ab.setTitle("LED (Connected)");
+					isConnect = true;
+					break;
+				case BluetoothConnectService.STATE_CONNECTIONLOST:
+					ab.setTitle("LED (Connection Lost)");
+					isConnect = false;
 					break;
 				}
 				break;
@@ -345,6 +433,7 @@ public class MainActivity extends ActionBarActivity {
 		if (mConnectService.getState() != BluetoothConnectService.STATE_CONNECTED) {
 			Toast.makeText(this, "You are not connected to a device.",
 					Toast.LENGTH_SHORT).show();
+			isConnect = false;
 			return;
 		}
 
@@ -356,6 +445,7 @@ public class MainActivity extends ActionBarActivity {
 	}
 
 	private void getBasicInfo() {
+		Log.i("getBasicInfo", "getBasicInfo");
 		DBhelper.openDataBase(this);
 		Cursor c = DBhelper.select(DATABASE_TABLE_1, new String[] {
 				COLUMN_NAME_1, COLUMN_RED_1, COLUMN_GREEN_1, COLUMN_BLUE_1 },
@@ -364,17 +454,56 @@ public class MainActivity extends ActionBarActivity {
 		int RedIndex = c.getColumnIndex(COLUMN_RED_1);
 		int GreenIndex = c.getColumnIndex(COLUMN_GREEN_1);
 		int BlueIndex = c.getColumnIndex(COLUMN_BLUE_1);
+		colorNameArray = new String[c.getCount()];
+		RedArray = new String[c.getCount()];
+		GreenArray = new String[c.getCount()];
+		BlueArray = new String[c.getCount()];
 		int i = 0;
 		for (c.moveToFirst(); !(c.isAfterLast()); c.moveToNext()) {
 			colorNameArray[i] = c.getString(colorNameIndex);
-			RedArray[i] = c.getString(RedIndex);
-			GreenArray[i] = c.getString(GreenIndex);
-			BlueArray[i] = c.getString(BlueIndex);
+			switch (c.getString(RedIndex).length()) {
+			case 1:
+				RedArray[i] = "00" + c.getString(RedIndex);
+				break;
+			case 2:
+				RedArray[i] = "0" + c.getString(RedIndex);
+				break;
+			case 3:
+				RedArray[i] = c.getString(RedIndex);
+				break;
+			}
+			switch (c.getString(GreenIndex).length()) {
+			case 1:
+				GreenArray[i] = "00" + c.getString(GreenIndex);
+				break;
+			case 2:
+				GreenArray[i] = "0" + c.getString(GreenIndex);
+				break;
+			case 3:
+				GreenArray[i] = c.getString(GreenIndex);
+				break;
+			}
+			switch (c.getString(BlueIndex).length()) {
+			case 1:
+				BlueArray[i] = "00" + c.getString(BlueIndex);
+				break;
+			case 2:
+				BlueArray[i] = "0" + c.getString(BlueIndex);
+				break;
+			case 3:
+				BlueArray[i] = c.getString(BlueIndex);
+				break;
+			}
 			i++;
 		}
 		c.close();
 		DBhelper.close();
 
+	}
+
+	private void settingChange() {
+		getBasicInfo();
+		myAdapter.notifyDataSetChanged();
 	}
 
 	/**
@@ -610,15 +739,19 @@ public class MainActivity extends ActionBarActivity {
 								(MainActivity) getActivity(), messageToSend,
 								Toast.LENGTH_SHORT);
 						toDevice.show();
-						tgb_OnOff.setChecked(true);
-						tgb_OnOff.setClickable(true);
-
+						if (((MainActivity) getActivity()).isConnect) {
+							tgb_OnOff.setChecked(true);
+							tgb_OnOff.setClickable(true);
+						} else {
+							tgb_OnOff.setChecked(false);
+							tgb_OnOff.setClickable(false);
+						}
 					}
-
 				}
 			};
 			btn_confirm.setOnClickListener(confirmListener);
 
+			// 亮暗開關
 			OnCheckedChangeListener OnOffListener = new OnCheckedChangeListener() {
 
 				@Override
@@ -644,6 +777,7 @@ public class MainActivity extends ActionBarActivity {
 			};
 			tgb_OnOff.setOnCheckedChangeListener(OnOffListener);
 
+			// 快速鍵開關
 			OnClickListener HK_OCL = new OnClickListener() {
 
 				@Override
@@ -740,6 +874,53 @@ public class MainActivity extends ActionBarActivity {
 					// TODO Auto-generated method stub
 					switch (v.getId()) {
 					case R.id.btn_open:
+						mOpenDialog = new Dialog(getActivity());
+						mOpenDialog.setTitle(R.string.dialog_open_title);
+						mOpenDialog.setCancelable(false);
+						mOpenDialog.setContentView(R.layout.dialog_db_open);
+
+						ListView dialog_o_list = (ListView) mOpenDialog
+								.findViewById(R.id.dialog_o_list);
+						Button dialog_o_btn_cancel = (Button) mOpenDialog
+								.findViewById(R.id.dialgo_o_btn_cancel);
+
+						dialog_o_list
+								.setAdapter(((MainActivity) getActivity()).myAdapter);
+						dialog_o_list
+								.setOnItemClickListener(new OnItemClickListener() {
+
+									@Override
+									public void onItemClick(
+											AdapterView<?> parent, View view,
+											int position, long id) {
+										// TODO Auto-generated method stub
+										String name = ((MainActivity) getActivity()).colorNameArray[position];
+										int red = Integer
+												.parseInt(((MainActivity) getActivity()).RedArray[position]);
+										int green = Integer
+												.parseInt(((MainActivity) getActivity()).GreenArray[position]);
+										int blue = Integer
+												.parseInt(((MainActivity) getActivity()).BlueArray[position]);
+
+										skb_R.setProgress(red);
+										skb_G.setProgress(green);
+										skb_B.setProgress(blue);
+										txt_title.setText("Current state: "
+												+ name);
+										mOpenDialog.dismiss();
+									}
+								});
+						dialog_o_btn_cancel
+								.setOnClickListener(new OnClickListener() {
+
+									@Override
+									public void onClick(View v) {
+										// TODO Auto-generated method stub
+										mOpenDialog.dismiss();
+									}
+								});
+
+						mOpenDialog.show();
 						break;
 					case R.id.btn_save:
 						int save_r = Integer.parseInt(edt_R.getText()
@@ -802,25 +983,6 @@ public class MainActivity extends ActionBarActivity {
 											DataBaseHelper DBhelper = new DataBaseHelper(
 													getActivity());
 											DBhelper.openDataBase(getActivity());
-
-											try {
-												DBhelper.insert(
-														DATABASE_TABLE_1,
-														columnsValue);
-												Toast SuccessToast = Toast
-														.makeText(
-																getActivity(),
-																"Saving Successful!",
-																Toast.LENGTH_SHORT);
-												SuccessToast.show();
-											} catch (Exception e) {
-												e.printStackTrace();
-												Toast ErrorToast = Toast
-														.makeText(
-																getActivity(),
-																"Saving DB Error!",
-																Toast.LENGTH_SHORT);
-											}
 											try {
 												DBhelper.insert(
 														DATABASE_TABLE_1,
@@ -842,6 +1004,8 @@ public class MainActivity extends ActionBarActivity {
 												ErrorToast.show();
 											}
 											DBhelper.close();
+											((MainActivity) getActivity())
+													.settingChange();
 											mSaveDialog.dismiss();
 										}
 									}
