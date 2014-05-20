@@ -31,12 +31,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	public void onCreate(SQLiteDatabase db) {
 		// TODO Auto-generated method stub
 		// 建立資料表 Create table.
-		db.execSQL("CREATE TABLE  IF NOT EXISTS " + DATABASE_TABLE_1 + " ("
-				+ COLUMN_ID_1 + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-				+ COLUMN_NAME_1 + " TEXT NOT NULL, " 
-				+ COLUMN_RED_1 + " varchar NOT NULL, " 
-				+ COLUMN_GREEN_1 + " varchar NOT NULL, " 
-				+ COLUMN_BLUE_1 + " varchar NOT NULL);"
+		db.execSQL("CREATE TABLE  IF NOT EXISTS " + DATABASE_TABLE_1 + " (" + COLUMN_ID_1
+				+ " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_NAME_1 
+				+ " TEXT NOT NULL, " + COLUMN_RED_1
+				+ " varchar NOT NULL, " + COLUMN_GREEN_1 
+				+ " varchar NOT NULL, " + COLUMN_BLUE_1
+				+ " varchar NOT NULL);"
 
 		);
 	}
@@ -52,24 +52,21 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		db = DBhelper.getWritableDatabase();
 	}
 
-	public Cursor select(String table, String[] columns, String selection,
-			String[] selectionArgs, String orderBy) {
+	public Cursor select(String table, String[] columns, String selection, String[] selectionArgs, String orderBy) {
 		/*
 		 * SELECT [columns] 
 		 * FROM [table] 
 		 * WHERE [selection] = [selectionArgs]
 		 * ORDERBY [orderBy]
 		 */
-		Cursor c = db.query(table, columns, selection, selectionArgs, null,
-				null, orderBy);
+		Cursor c = db.query(table, columns, selection, selectionArgs, null, null, orderBy);
 		return c;
 	}
 
 	public void insert(String table, String[] columnsValue) {
 		ContentValues values = new ContentValues();
 		if (table == "Color") {
-			String[] columns = { COLUMN_NAME_1, COLUMN_RED_1, COLUMN_GREEN_1,
-					COLUMN_BLUE_1 };
+			String[] columns = { COLUMN_NAME_1, COLUMN_RED_1, COLUMN_GREEN_1, COLUMN_BLUE_1 };
 			for (int i = 0; i < columns.length; i++) {
 				values.put(columns[i], columnsValue[i]);
 			}
@@ -77,13 +74,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		db.insert(table, null, values);
 	}
 
-	public void update(String table, String[] columnsValue, String whereClause,
-			String[] whereArgs) {
+	public void update(String table, String[] columnsValue, String whereClause, String[] whereArgs) {
 		try {
 			ContentValues values = new ContentValues();
 			if (table == "Color") {
-				String[] columns = { COLUMN_NAME_1, COLUMN_RED_1,
-						COLUMN_GREEN_1, COLUMN_BLUE_1 };
+				String[] columns = { COLUMN_NAME_1, COLUMN_RED_1, COLUMN_GREEN_1, COLUMN_BLUE_1 };
 				for (int i = 0; i < columns.length; i++) {
 					values.put(columns[i], columnsValue[i]);
 				}

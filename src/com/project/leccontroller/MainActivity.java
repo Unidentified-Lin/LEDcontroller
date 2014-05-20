@@ -96,16 +96,14 @@ public class MainActivity extends ActionBarActivity {
 			tv.setText("[" + colorNameArray[position] + "] ");
 			tv.setTextSize(20);
 			tv.setTextColor(Color.BLACK);
-			tv.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT,
-					LayoutParams.WRAP_CONTENT));
+			tv.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 			// tv.setGravity(Gravity.CENTER_VERTICAL);
 
 			TextView tv1 = new TextView(MainActivity.this);
 			tv1.setText(RedArray[position] + " | ");
 			tv1.setTextSize(18);
 			tv1.setTextColor(Color.rgb(100, 100, 100));
-			tv1.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT,
-					LayoutParams.WRAP_CONTENT));
+			tv1.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 			// tv2.setGravity(Gravity.BOTTOM | Gravity.RIGHT); //
 			// 設定TextView在父容器的位置
 
@@ -113,8 +111,7 @@ public class MainActivity extends ActionBarActivity {
 			tv2.setText(GreenArray[position] + " | ");
 			tv2.setTextSize(18);
 			tv2.setTextColor(Color.rgb(100, 100, 100));
-			tv2.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT,
-					LayoutParams.WRAP_CONTENT));
+			tv2.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 			// tv2.setGravity(Gravity.BOTTOM | Gravity.RIGHT); //
 			// 設定TextView在父容器的位置
 
@@ -122,8 +119,7 @@ public class MainActivity extends ActionBarActivity {
 			tv3.setText(BlueArray[position]);
 			tv3.setTextSize(18);
 			tv3.setTextColor(Color.rgb(100, 100, 100));
-			tv3.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT,
-					LayoutParams.WRAP_CONTENT));
+			tv3.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 			// tv2.setGravity(Gravity.BOTTOM | Gravity.RIGHT); //
 			// 設定TextView在父容器的位置
 
@@ -178,8 +174,7 @@ public class MainActivity extends ActionBarActivity {
 		mProgress.setCancelable(false);
 
 		if (savedInstanceState == null) {
-			getSupportFragmentManager().beginTransaction()
-					.add(R.id.container, new PlaceholderFragment()).commit();
+			getSupportFragmentManager().beginTransaction().add(R.id.container, new PlaceholderFragment()).commit();
 		}
 	}
 
@@ -195,8 +190,7 @@ public class MainActivity extends ActionBarActivity {
 		if (mBluetoothAdapter == null || !mBluetoothAdapter.isEnabled()) {
 			// Bluetooth is disabled
 			Log.i(TAG, "Bluetooth is disabled.");
-			Intent enableBtIntent = new Intent(
-					BluetoothAdapter.ACTION_REQUEST_ENABLE);
+			Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
 			startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
 			Log.i(TAG, "Bluetooth has been force on.");
 			return;
@@ -268,8 +262,7 @@ public class MainActivity extends ActionBarActivity {
 		switch (item.getItemId()) {
 		case R.id.action_scan:
 			if (isScanning) {
-				Log.i("Scan select",
-						"mProgress is scanning, can't do it again.");
+				Log.i("Scan select", "mProgress is scanning, can't do it again.");
 				return false;
 			} else {
 				Log.i("Scan select", "mProgress is not scanning. Scan!!!");
@@ -288,8 +281,7 @@ public class MainActivity extends ActionBarActivity {
 			// Make a connection with the device
 			mConnectService.connect(device);
 			// Display progress UI
-			mHandler.sendMessage(Message.obtain(null, MSG_PROGRESS,
-					"Connecting to " + device.getName() + "..."));
+			mHandler.sendMessage(Message.obtain(null, MSG_PROGRESS, "Connecting to " + device.getName() + "..."));
 			return super.onOptionsItemSelected(item);
 		}
 	}
@@ -307,9 +299,7 @@ public class MainActivity extends ActionBarActivity {
 			} else {
 				// User did not enable Bluetooth or an error occurred
 				Log.d(TAG, "BT not enabled");
-				Toast.makeText(this,
-						"Bluetooth was not enabled. Can't controll device.",
-						Toast.LENGTH_SHORT).show();
+				Toast.makeText(this, "Bluetooth was not enabled. Can't controll device.", Toast.LENGTH_SHORT).show();
 				finish();
 			}
 		}
@@ -359,8 +349,7 @@ public class MainActivity extends ActionBarActivity {
 			// when discovery finds a device
 			if (BluetoothDevice.ACTION_FOUND.equals(action)) {
 				// Get the BluetoothDevice object from the Internet
-				BluetoothDevice device = intent
-						.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+				BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
 				Log.i(TAG, "Found device: " + device.getName());
 				/*
 				 * We are looking for SensorTag devices only, so validate the
@@ -408,9 +397,7 @@ public class MainActivity extends ActionBarActivity {
 				}
 				break;
 			case MSG_TOAST:
-				Toast.makeText(getApplicationContext(),
-						msg.getData().getString(TOAST), Toast.LENGTH_SHORT)
-						.show();
+				Toast.makeText(getApplicationContext(), msg.getData().getString(TOAST), Toast.LENGTH_SHORT).show();
 				break;
 			case MSG_PROGRESS:
 				mProgress.setMessage((String) msg.obj);
@@ -431,8 +418,7 @@ public class MainActivity extends ActionBarActivity {
 	private void sendMessage(String message) {
 		// Check that we're actually connected before trying anything
 		if (mConnectService.getState() != BluetoothConnectService.STATE_CONNECTED) {
-			Toast.makeText(this, "You are not connected to a device.",
-					Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "You are not connected to a device.", Toast.LENGTH_SHORT).show();
 			isConnect = false;
 			return;
 		}
@@ -447,9 +433,8 @@ public class MainActivity extends ActionBarActivity {
 	private void getBasicInfo() {
 		Log.i("getBasicInfo", "getBasicInfo");
 		DBhelper.openDataBase(this);
-		Cursor c = DBhelper.select(DATABASE_TABLE_1, new String[] {
-				COLUMN_NAME_1, COLUMN_RED_1, COLUMN_GREEN_1, COLUMN_BLUE_1 },
-				null, null, COLUMN_ID_1);
+		Cursor c = DBhelper.select(DATABASE_TABLE_1, new String[] { COLUMN_NAME_1, COLUMN_RED_1, COLUMN_GREEN_1,
+				COLUMN_BLUE_1 }, null, null, COLUMN_ID_1);
 		int colorNameIndex = c.getColumnIndex(COLUMN_NAME_1);
 		int RedIndex = c.getColumnIndex(COLUMN_RED_1);
 		int GreenIndex = c.getColumnIndex(COLUMN_GREEN_1);
@@ -517,13 +502,10 @@ public class MainActivity extends ActionBarActivity {
 		String last_r = null, last_g = null, last_b = null;
 
 		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_main, container,
-					false);
+		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+			View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
-			final TextView txt_title = (TextView) rootView
-					.findViewById(R.id.txt_title);
+			final TextView txt_title = (TextView) rootView.findViewById(R.id.txt_title);
 			txt_title.setText("This is LED color controller.");
 
 			final EditText edt_R = (EditText) rootView.findViewById(R.id.edt_R);
@@ -533,8 +515,7 @@ public class MainActivity extends ActionBarActivity {
 			edt_G.setText("0");
 			edt_B.setText("0");
 
-			final View view_color = (View) rootView
-					.findViewById(R.id.view_color);
+			final View view_color = (View) rootView.findViewById(R.id.view_color);
 			view_color.setBackgroundColor(Color.rgb(0, 0, 0));
 
 			final SeekBar skb_R = (SeekBar) rootView.findViewById(R.id.skb_R);
@@ -544,11 +525,9 @@ public class MainActivity extends ActionBarActivity {
 			skb_G.setProgress(0);
 			skb_B.setProgress(0);
 
-			Button btn_confirm = (Button) rootView
-					.findViewById(R.id.btn_confirm);
+			Button btn_confirm = (Button) rootView.findViewById(R.id.btn_confirm);
 
-			final ToggleButton tgb_OnOff = (ToggleButton) rootView
-					.findViewById(R.id.tgb_OnOff);
+			final ToggleButton tgb_OnOff = (ToggleButton) rootView.findViewById(R.id.tgb_OnOff);
 
 			Button btn_hk1 = (Button) rootView.findViewById(R.id.btn_hk1);
 			Button btn_hk2 = (Button) rootView.findViewById(R.id.btn_hk2);
@@ -587,8 +566,7 @@ public class MainActivity extends ActionBarActivity {
 			OnEditorActionListener OEAL = new OnEditorActionListener() {
 
 				@Override
-				public boolean onEditorAction(TextView v, int actionId,
-						KeyEvent event) {
+				public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 					// TODO Auto-generated method stub
 					if (actionId == EditorInfo.IME_ACTION_DONE) {
 						int red = 0, green = 0, blue = 0;
@@ -599,8 +577,7 @@ public class MainActivity extends ActionBarActivity {
 							skb_R.setProgress(red);
 						}
 						try {
-							green = Integer
-									.parseInt(edt_G.getText().toString());
+							green = Integer.parseInt(edt_G.getText().toString());
 						} catch (Exception e) {
 							// edt_G.setText("0");
 							skb_G.setProgress(green);
@@ -621,8 +598,7 @@ public class MainActivity extends ActionBarActivity {
 						skb_R.setProgress(red);
 						skb_G.setProgress(green);
 						skb_B.setProgress(blue);
-						view_color.setBackgroundColor(Color.rgb(red, green,
-								blue));
+						view_color.setBackgroundColor(Color.rgb(red, green, blue));
 					}
 					return false;
 				}
@@ -647,8 +623,7 @@ public class MainActivity extends ActionBarActivity {
 				}
 
 				@Override
-				public void onProgressChanged(SeekBar seekBar, int progress,
-						boolean fromUser) {
+				public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 					// TODO Auto-generated method stub
 					String txt_progress = String.valueOf(progress);
 					txt_title.setText("This is LED color controller.");
@@ -657,24 +632,19 @@ public class MainActivity extends ActionBarActivity {
 						edt_R.setText(txt_progress);
 						edt_G.setText("" + skb_G.getProgress());
 						edt_B.setText("" + skb_B.getProgress());
-						view_color.setBackgroundColor(Color.rgb(progress,
-								skb_G.getProgress(), skb_B.getProgress()));
+						view_color.setBackgroundColor(Color.rgb(progress, skb_G.getProgress(), skb_B.getProgress()));
 						break;
 					case R.id.skb_G:
 						edt_R.setText("" + skb_R.getProgress());
 						edt_G.setText(txt_progress);
 						edt_B.setText("" + skb_B.getProgress());
-						view_color.setBackgroundColor(Color.rgb(
-								skb_R.getProgress(), progress,
-								skb_B.getProgress()));
+						view_color.setBackgroundColor(Color.rgb(skb_R.getProgress(), progress, skb_B.getProgress()));
 						break;
 					case R.id.skb_B:
 						edt_R.setText("" + skb_R.getProgress());
 						edt_G.setText("" + skb_G.getProgress());
 						edt_B.setText(txt_progress);
-						view_color.setBackgroundColor(Color.rgb(
-								skb_R.getProgress(), skb_G.getProgress(),
-								progress));
+						view_color.setBackgroundColor(Color.rgb(skb_R.getProgress(), skb_G.getProgress(), progress));
 						break;
 					}
 
@@ -703,9 +673,7 @@ public class MainActivity extends ActionBarActivity {
 						gg = Integer.parseInt(g);
 					} catch (Exception e) {
 						goodToGo = false;
-						Toast toast = Toast.makeText(
-								(MainActivity) getActivity(), "尚未填妥顏色",
-								Toast.LENGTH_LONG);
+						Toast toast = Toast.makeText((MainActivity) getActivity(), "尚未填妥顏色", Toast.LENGTH_LONG);
 						toast.show();
 
 					}
@@ -731,13 +699,10 @@ public class MainActivity extends ActionBarActivity {
 						last_g = "@002." + g + "#";
 						last_b = "@003." + b + "#";
 						// 傳送參數出去
-						String messageToSend = last_r + "\n" + last_g + "\n"
-								+ last_b;
-						((MainActivity) getActivity())
-								.sendMessage(messageToSend);
-						Toast toDevice = Toast.makeText(
-								(MainActivity) getActivity(), messageToSend,
-								Toast.LENGTH_SHORT);
+						String messageToSend = last_r + "\n" + last_g + "\n" + last_b;
+						((MainActivity) getActivity()).sendMessage(messageToSend);
+						Toast toDevice = Toast
+								.makeText((MainActivity) getActivity(), messageToSend, Toast.LENGTH_SHORT);
 						toDevice.show();
 						if (((MainActivity) getActivity()).isConnect) {
 							tgb_OnOff.setChecked(true);
@@ -755,22 +720,17 @@ public class MainActivity extends ActionBarActivity {
 			OnCheckedChangeListener OnOffListener = new OnCheckedChangeListener() {
 
 				@Override
-				public void onCheckedChanged(CompoundButton buttonView,
-						boolean isChecked) {
-					String messageToSend = last_r + "\n" + last_g + "\n"
-							+ last_b;
+				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+					String messageToSend = last_r + "\n" + last_g + "\n" + last_b;
 					// TODO Auto-generated method stub
 					if (isChecked) {
-						Toast toDevice = Toast.makeText(
-								(MainActivity) getActivity(), messageToSend,
-								Toast.LENGTH_SHORT);
+						Toast toDevice = Toast
+								.makeText((MainActivity) getActivity(), messageToSend, Toast.LENGTH_SHORT);
 						toDevice.show();
 					} else {
-						((MainActivity) getActivity())
-								.sendMessage(messageToSend);
-						Toast toDevice = Toast.makeText(
-								(MainActivity) getActivity(), messageToSend,
-								Toast.LENGTH_SHORT);
+						((MainActivity) getActivity()).sendMessage(messageToSend);
+						Toast toDevice = Toast
+								.makeText((MainActivity) getActivity(), messageToSend, Toast.LENGTH_SHORT);
 						toDevice.show();
 					}
 				}
@@ -788,36 +748,27 @@ public class MainActivity extends ActionBarActivity {
 					int hk_r, hk_g, hk_b;
 					switch (v.getId()) {
 					case R.id.btn_hk1:
-						hk_r = Integer.parseInt(settings.getString("hotkey0_R",
-								"0"));
-						hk_g = Integer.parseInt(settings.getString("hotkey0_G",
-								"0"));
-						hk_b = Integer.parseInt(settings.getString("hotkey0_B",
-								"0"));
+						hk_r = Integer.parseInt(settings.getString("hotkey0_R", "0"));
+						hk_g = Integer.parseInt(settings.getString("hotkey0_G", "0"));
+						hk_b = Integer.parseInt(settings.getString("hotkey0_B", "0"));
 						skb_R.setProgress(hk_r);
 						skb_G.setProgress(hk_g);
 						skb_B.setProgress(hk_b);
 						txt_title.setText("Current state: Hotkey1");
 						break;
 					case R.id.btn_hk2:
-						hk_r = Integer.parseInt(settings.getString("hotkey1_R",
-								"0"));
-						hk_g = Integer.parseInt(settings.getString("hotkey1_G",
-								"0"));
-						hk_b = Integer.parseInt(settings.getString("hotkey1_B",
-								"0"));
+						hk_r = Integer.parseInt(settings.getString("hotkey1_R", "0"));
+						hk_g = Integer.parseInt(settings.getString("hotkey1_G", "0"));
+						hk_b = Integer.parseInt(settings.getString("hotkey1_B", "0"));
 						skb_R.setProgress(hk_r);
 						skb_G.setProgress(hk_g);
 						skb_B.setProgress(hk_b);
 						txt_title.setText("Current state: Hotkey2");
 						break;
 					case R.id.btn_hk3:
-						hk_r = Integer.parseInt(settings.getString("hotkey2_R",
-								"0"));
-						hk_g = Integer.parseInt(settings.getString("hotkey2_G",
-								"0"));
-						hk_b = Integer.parseInt(settings.getString("hotkey2_B",
-								"0"));
+						hk_r = Integer.parseInt(settings.getString("hotkey2_R", "0"));
+						hk_g = Integer.parseInt(settings.getString("hotkey2_G", "0"));
+						hk_b = Integer.parseInt(settings.getString("hotkey2_B", "0"));
 						skb_R.setProgress(hk_r);
 						skb_G.setProgress(hk_g);
 						skb_B.setProgress(hk_b);
@@ -826,8 +777,7 @@ public class MainActivity extends ActionBarActivity {
 					case R.id.btn_set:
 						Log.i("SetButton", "it's work");
 						String[] items = { "Hotkey1", "Hotkey2", "Hotkey3" };
-						AlertDialog.Builder adBuilder = new AlertDialog.Builder(
-								(MainActivity) getActivity());
+						AlertDialog.Builder adBuilder = new AlertDialog.Builder((MainActivity) getActivity());
 						adBuilder.setTitle("Set Hotkey");
 						adBuilder.setItems(items, adSetListener);
 						adBuilder.setNegativeButton("Cancel", null);
@@ -842,22 +792,18 @@ public class MainActivity extends ActionBarActivity {
 					public void onClick(DialogInterface dialog, int which) {
 						// TODO Auto-generated method stub
 						// 取得SharedPreference設定("Preference"為設定檔的名稱)
-						SharedPreferences settings = (SharedPreferences) getActivity()
-								.getSharedPreferences("Preference", 0);
+						SharedPreferences settings = (SharedPreferences) getActivity().getSharedPreferences(
+								"Preference", 0);
 						// 取得(R,G,B)
 						String r = null, g = null, b = null;
 						r = edt_R.getText().toString();
 						g = edt_G.getText().toString();
 						b = edt_B.getText().toString();
 						// 存入數值
-						settings.edit().putString("hotkey" + which + "_R", r)
-								.commit();
-						settings.edit().putString("hotkey" + which + "_G", g)
-								.commit();
-						settings.edit().putString("hotkey" + which + "_B", b)
-								.commit();
-						txt_title
-								.setText("Current state: Hotkey" + (which + 1));
+						settings.edit().putString("hotkey" + which + "_R", r).commit();
+						settings.edit().putString("hotkey" + which + "_G", g).commit();
+						settings.edit().putString("hotkey" + which + "_B", b).commit();
+						txt_title.setText("Current state: Hotkey" + (which + 1));
 					}
 				};
 			};
@@ -879,146 +825,105 @@ public class MainActivity extends ActionBarActivity {
 						mOpenDialog.setCancelable(false);
 						mOpenDialog.setContentView(R.layout.dialog_db_open);
 
-						ListView dialog_o_list = (ListView) mOpenDialog
-								.findViewById(R.id.dialog_o_list);
-						Button dialog_o_btn_cancel = (Button) mOpenDialog
-								.findViewById(R.id.dialgo_o_btn_cancel);
+						ListView dialog_o_list = (ListView) mOpenDialog.findViewById(R.id.dialog_o_list);
+						Button dialog_o_btn_cancel = (Button) mOpenDialog.findViewById(R.id.dialgo_o_btn_cancel);
 
-						dialog_o_list
-								.setAdapter(((MainActivity) getActivity()).myAdapter);
-						dialog_o_list
-								.setOnItemClickListener(new OnItemClickListener() {
+						dialog_o_list.setAdapter(((MainActivity) getActivity()).myAdapter);
+						dialog_o_list.setOnItemClickListener(new OnItemClickListener() {
 
-									@Override
-									public void onItemClick(
-											AdapterView<?> parent, View view,
-											int position, long id) {
-										// TODO Auto-generated method stub
-										String name = ((MainActivity) getActivity()).colorNameArray[position];
-										int red = Integer
-												.parseInt(((MainActivity) getActivity()).RedArray[position]);
-										int green = Integer
-												.parseInt(((MainActivity) getActivity()).GreenArray[position]);
-										int blue = Integer
-												.parseInt(((MainActivity) getActivity()).BlueArray[position]);
+							@Override
+							public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+								// TODO Auto-generated method stub
+								String name = ((MainActivity) getActivity()).colorNameArray[position];
+								int red = Integer.parseInt(((MainActivity) getActivity()).RedArray[position]);
+								int green = Integer.parseInt(((MainActivity) getActivity()).GreenArray[position]);
+								int blue = Integer.parseInt(((MainActivity) getActivity()).BlueArray[position]);
 
-										skb_R.setProgress(red);
-										skb_G.setProgress(green);
-										skb_B.setProgress(blue);
-										txt_title.setText("Current state: "
-												+ name);
-										mOpenDialog.dismiss();
-									}
-								});
-						dialog_o_btn_cancel
-								.setOnClickListener(new OnClickListener() {
+								skb_R.setProgress(red);
+								skb_G.setProgress(green);
+								skb_B.setProgress(blue);
+								txt_title.setText("Current state: " + name);
+								mOpenDialog.dismiss();
+							}
+						});
+						dialog_o_btn_cancel.setOnClickListener(new OnClickListener() {
 
-									@Override
-									public void onClick(View v) {
-										// TODO Auto-generated method stub
-										mOpenDialog.dismiss();
-									}
-								});
+							@Override
+							public void onClick(View v) {
+								// TODO Auto-generated method stub
+								mOpenDialog.dismiss();
+							}
+						});
 
 						mOpenDialog.show();
 						break;
 					case R.id.btn_save:
-						int save_r = Integer.parseInt(edt_R.getText()
-								.toString());
-						int save_g = Integer.parseInt(edt_G.getText()
-								.toString());
-						int save_b = Integer.parseInt(edt_B.getText()
-								.toString());
+						int save_r = Integer.parseInt(edt_R.getText().toString());
+						int save_g = Integer.parseInt(edt_G.getText().toString());
+						int save_b = Integer.parseInt(edt_B.getText().toString());
 
 						mSaveDialog = new Dialog(getActivity());
 						mSaveDialog.setTitle(R.string.dialog_save_title);
 						mSaveDialog.setCancelable(false);
 						mSaveDialog.setContentView(R.layout.dialog_db_save);
 
-						final EditText dialog_s_edt_name = (EditText) mSaveDialog
-								.findViewById(R.id.dialog_s_edt_name);
-						View dialog_s_view_color = (View) mSaveDialog
-								.findViewById(R.id.dialog_s_view_color);
-						TextView dialog_s_txt_rgb = (TextView) mSaveDialog
-								.findViewById(R.id.dialog_s_txt_rgb);
-						Button dialog_s_btn_confirm = (Button) mSaveDialog
-								.findViewById(R.id.dialog_s_btn_confirm);
-						Button dialog_s_btn_cancel = (Button) mSaveDialog
-								.findViewById(R.id.dialog_s_btn_cancel);
+						final EditText dialog_s_edt_name = (EditText) mSaveDialog.findViewById(R.id.dialog_s_edt_name);
+						View dialog_s_view_color = (View) mSaveDialog.findViewById(R.id.dialog_s_view_color);
+						TextView dialog_s_txt_rgb = (TextView) mSaveDialog.findViewById(R.id.dialog_s_txt_rgb);
+						Button dialog_s_btn_confirm = (Button) mSaveDialog.findViewById(R.id.dialog_s_btn_confirm);
+						Button dialog_s_btn_cancel = (Button) mSaveDialog.findViewById(R.id.dialog_s_btn_cancel);
 
-						dialog_s_view_color.setBackgroundColor(Color.rgb(
-								save_r, save_g, save_b));
-						dialog_s_txt_rgb.setText("R: " + save_r + " | G: "
-								+ save_g + " | B: " + save_b);
+						dialog_s_view_color.setBackgroundColor(Color.rgb(save_r, save_g, save_b));
+						dialog_s_txt_rgb.setText("R: " + save_r + " | G: " + save_g + " | B: " + save_b);
 
-						dialog_s_btn_confirm
-								.setOnClickListener(new OnClickListener() {
+						dialog_s_btn_confirm.setOnClickListener(new OnClickListener() {
 
-									@Override
-									public void onClick(View v) {
-										// TODO Auto-generated method stub
-										switch (v.getId()) {
-										case R.id.dialog_s_btn_confirm:
-											String name = dialog_s_edt_name
-													.getText().toString();
-											if (name.equals("")) {
-												Toast emptyName = Toast
-														.makeText(
-																getActivity(),
-																"Have to input name!",
-																Toast.LENGTH_SHORT);
-												emptyName.show();
-												break;
-											}
-											String red = edt_R.getText()
-													.toString();
-											String green = edt_G.getText()
-													.toString();
-											String blue = edt_B.getText()
-													.toString();
-
-											String[] columnsValue = { name,
-													red, green, blue };
-
-											DataBaseHelper DBhelper = new DataBaseHelper(
-													getActivity());
-											DBhelper.openDataBase(getActivity());
-											try {
-												DBhelper.insert(
-														DATABASE_TABLE_1,
-														columnsValue);
-												Toast SuccessToast = Toast
-														.makeText(
-																getActivity(),
-																"Saving Successful!",
-																Toast.LENGTH_SHORT);
-												SuccessToast.show();
-											} catch (Exception e) {
-												e.printStackTrace();
-												Toast ErrorToast = Toast
-														.makeText(
-																getActivity(),
-																"Saving DB Error!",
-																Toast.LENGTH_SHORT);
-
-												ErrorToast.show();
-											}
-											DBhelper.close();
-											((MainActivity) getActivity())
-													.settingChange();
-											mSaveDialog.dismiss();
-										}
+							@Override
+							public void onClick(View v) {
+								// TODO Auto-generated method stub
+								switch (v.getId()) {
+								case R.id.dialog_s_btn_confirm:
+									String name = dialog_s_edt_name.getText().toString();
+									if (name.equals("")) {
+										Toast emptyName = Toast.makeText(getActivity(), "Have to input name!",
+												Toast.LENGTH_SHORT);
+										emptyName.show();
+										break;
 									}
-								});
-						dialog_s_btn_cancel
-								.setOnClickListener(new OnClickListener() {
+									String red = edt_R.getText().toString();
+									String green = edt_G.getText().toString();
+									String blue = edt_B.getText().toString();
 
-									@Override
-									public void onClick(View v) {
-										// TODO Auto-generated method stub
-										mSaveDialog.dismiss();
+									String[] columnsValue = { name, red, green, blue };
+
+									DataBaseHelper DBhelper = new DataBaseHelper(getActivity());
+									DBhelper.openDataBase(getActivity());
+									try {
+										DBhelper.insert(DATABASE_TABLE_1, columnsValue);
+										Toast SuccessToast = Toast.makeText(getActivity(), "Saving Successful!",
+												Toast.LENGTH_SHORT);
+										SuccessToast.show();
+									} catch (Exception e) {
+										e.printStackTrace();
+										Toast ErrorToast = Toast.makeText(getActivity(), "Saving DB Error!",
+												Toast.LENGTH_SHORT);
+
+										ErrorToast.show();
 									}
-								});
+									DBhelper.close();
+									((MainActivity) getActivity()).settingChange();
+									mSaveDialog.dismiss();
+								}
+							}
+						});
+						dialog_s_btn_cancel.setOnClickListener(new OnClickListener() {
+
+							@Override
+							public void onClick(View v) {
+								// TODO Auto-generated method stub
+								mSaveDialog.dismiss();
+							}
+						});
 						mSaveDialog.show();
 					}
 				}

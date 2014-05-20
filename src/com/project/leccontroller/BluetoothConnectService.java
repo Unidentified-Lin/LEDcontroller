@@ -21,8 +21,7 @@ public class BluetoothConnectService {
 	private static final boolean D = true;
 
 	// Unique UUID for this application
-	private static final UUID MY_UUID_SECURE = UUID
-			.fromString("00001101-0000-1000-8000-00805F9B34FB");
+	private static final UUID MY_UUID_SECURE = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
 	// Member fields
 	private final BluetoothAdapter mBtAdapter;
@@ -63,8 +62,7 @@ public class BluetoothConnectService {
 		mState = state;
 
 		// Give the new state to the Handler so the UI Activity can update
-		mHandler.obtainMessage(MainActivity.MSG_STATE_CHANGE, state, -1)
-				.sendToTarget();
+		mHandler.obtainMessage(MainActivity.MSG_STATE_CHANGE, state, -1).sendToTarget();
 	}
 
 	/**
@@ -114,8 +112,7 @@ public class BluetoothConnectService {
 	 * @param device
 	 *            The BluetoothDevice that has been connected
 	 */
-	public synchronized void connected(BluetoothSocket socket,
-			BluetoothDevice device) {
+	public synchronized void connected(BluetoothSocket socket, BluetoothDevice device) {
 		if (D)
 			Log.d(TAG, "connected");
 
@@ -230,8 +227,7 @@ public class BluetoothConnectService {
 			// Get a BluetoothSocket for a connection with the
 			// given BluetoothDevice
 			try {
-					tmp = device
-							.createRfcommSocketToServiceRecord(MY_UUID_SECURE);
+				tmp = device.createRfcommSocketToServiceRecord(MY_UUID_SECURE);
 			} catch (IOException e) {
 				Log.e(TAG, "Socket Type: create() failed", e);
 			}
