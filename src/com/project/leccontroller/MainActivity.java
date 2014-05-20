@@ -44,6 +44,7 @@ import android.view.Window;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -58,7 +59,7 @@ import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity implements ActionBar.OnNavigationListener {
 
 	// Debugging
 	private static final String TAG = "BluetoothActivity";
@@ -161,6 +162,18 @@ public class MainActivity extends ActionBarActivity {
 		setContentView(R.layout.activity_main);
 		setProgressBarIndeterminate(true);
 
+		// Set up the action bar to show a dropdown list.
+		final ActionBar actionBar = getSupportActionBar();
+		actionBar.setDisplayShowTitleEnabled(false);
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+
+		// Set up the dropdown list navigation in the action bar.
+		actionBar.setListNavigationCallbacks(
+		// Specify a SpinnerAdapter to populate the dropdown list.
+				new ArrayAdapter<String>(actionBar.getThemedContext(), android.R.layout.simple_list_item_1,
+						android.R.id.text1, new String[] { getString(R.string.title_section1),
+								getString(R.string.title_section2) }), this);
+
 		DBhelper = new DataBaseHelper(this);
 
 		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -174,7 +187,7 @@ public class MainActivity extends ActionBarActivity {
 		mProgress.setCancelable(false);
 
 		if (savedInstanceState == null) {
-			getSupportFragmentManager().beginTransaction().add(R.id.container, new PlaceholderFragment()).commit();
+			getSupportFragmentManager().beginTransaction().add(R.id.container, new ColorPickerFragment()).commit();
 		}
 	}
 
@@ -242,6 +255,23 @@ public class MainActivity extends ActionBarActivity {
 	}
 
 	@Override
+	public boolean onNavigationItemSelected(int position, long id) {
+		// When the given dropdown item is selected, show its contents in the
+		// container view.
+		ColorPickerFragment ColorPickerFragment = new ColorPickerFragment();
+		DatabaseFragment DatabaseFragment = new DatabaseFragment();
+		switch (position) {
+		case 1:
+			getSupportFragmentManager().beginTransaction().replace(R.id.container, ColorPickerFragment).commit();
+		case 2:
+			getSupportFragmentManager().beginTransaction().replace(R.id.container, DatabaseFragment).commit();
+		default:
+			getSupportFragmentManager().beginTransaction().replace(R.id.container, ColorPickerFragment).commit();
+		}
+		return true;
+	}
+
+	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -272,7 +302,6 @@ public class MainActivity extends ActionBarActivity {
 				startScan();
 				return true;
 			}
-
 		default:
 			// // Obtain the discovered device to connect with
 			BluetoothDevice device = mDevices.get(item.getItemId());
@@ -494,9 +523,9 @@ public class MainActivity extends ActionBarActivity {
 	/**
 	 * A placeholder fragment containing a simple view.
 	 */
-	public static class PlaceholderFragment extends Fragment {
+	public static class ColorPickerFragment extends Fragment {
 
-		public PlaceholderFragment() {
+		public ColorPickerFragment() {
 		}
 
 		String last_r = null, last_g = null, last_b = null;
@@ -932,6 +961,19 @@ public class MainActivity extends ActionBarActivity {
 			btn_save.setOnClickListener(OpenSave_OCL);
 
 			return rootView;
+		}
+	}
+
+	public static class DatabaseFragment extends Fragment {
+
+		public DatabaseFragment() {
+		}
+
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+			// TODO Auto-generated method stub
+			View dbView = inflater.inflate(R.layout.fragment_datalist, container, false);
+			return dbView;
 		}
 	}
 }
