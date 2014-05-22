@@ -1130,6 +1130,7 @@ containing a value of this type.
         public static final int ifRoom=0x7f05000a;
         public static final int image=0x7f050027;
         public static final int listMode=0x7f050001;
+        public static final int list_data=0x7f050044;
         public static final int list_item=0x7f050029;
         public static final int middle=0x7f050012;
         public static final int never=0x7f050009;
@@ -1164,7 +1165,6 @@ containing a value of this type.
         public static final int txt_B=0x7f050049;
         public static final int txt_G=0x7f050046;
         public static final int txt_R=0x7f050047;
-        public static final int txt_label=0x7f050044;
         public static final int txt_title=0x7f050045;
         public static final int up=0x7f050021;
         public static final int useLogo=0x7f050003;

@@ -973,6 +973,34 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			// TODO Auto-generated method stub
 			View dbView = inflater.inflate(R.layout.fragment_datalist, container, false);
+
+			ListView list_data = (ListView) dbView.findViewById(R.id.list_data);
+			list_data.setAdapter(((MainActivity) getActivity()).myAdapter);
+			list_data.setOnItemClickListener(new OnItemClickListener() {
+
+				@Override
+				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+					// TODO Auto-generated method stub
+//					String name = ((MainActivity) getActivity()).colorNameArray[position];
+//					int red = Integer.parseInt(((MainActivity) getActivity()).RedArray[position]);
+//					int green = Integer.parseInt(((MainActivity) getActivity()).GreenArray[position]);
+//					int blue = Integer.parseInt(((MainActivity) getActivity()).BlueArray[position]);
+//
+//					Fragment colorFrag = DatabaseFragment.this.getFragmentManager().findFragmentById(
+//							R.layout.fragment_main);
+//					TextView txt_title = (TextView) colorFrag.getView().findViewById(R.id.txt_title);
+//					SeekBar skb_R = (SeekBar) colorFrag.getView().findViewById(R.id.skb_R);
+//					SeekBar skb_G = (SeekBar) colorFrag.getView().findViewById(R.id.skb_G);
+//					SeekBar skb_B = (SeekBar) colorFrag.getView().findViewById(R.id.skb_B);
+//
+//					skb_R.setProgress(red);
+//					skb_G.setProgress(green);
+//					skb_B.setProgress(blue);
+//					txt_title.setText("Current state: " + name);
+					getFragmentManager().beginTransaction().replace(R.id.container, new ColorPickerFragment()).commit();
+				}
+			});
+
 			return dbView;
 		}
 	}
