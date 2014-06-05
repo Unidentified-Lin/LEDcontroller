@@ -8,7 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="comproject.leccontroller.MainActivity$PlaceholderFragment" >
+    tools:context="com.project.ledcontroller.MainActivity$ColorPickerFragment" >
 
     <TextView
         android:id="@+id/txt_title"
@@ -23,7 +23,7 @@
         android:layout_below="@+id/txt_title"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:text="G"
+        android:text="Gà CH2"
         android:textSize="@dimen/RGB_text_size" />
 
     <TextView
@@ -33,7 +33,7 @@
         android:layout_alignBottom="@+id/txt_G"
         android:layout_marginRight="45dp"
         android:layout_toLeftOf="@+id/txt_G"
-        android:text="R"
+        android:text="Rà CH1"
         android:textSize="@dimen/RGB_text_size" />
 
     <EditText
@@ -57,7 +57,7 @@
         android:layout_above="@+id/edt_G"
         android:layout_marginLeft="45dp"
         android:layout_toRightOf="@+id/txt_G"
-        android:text="B"
+        android:text="Bà CH3"
         android:textSize="@dimen/RGB_text_size" />
 
     <EditText
@@ -73,25 +73,13 @@
         android:inputType="number"
         android:maxLength="3" />
 
-    <EditText
-        android:id="@+id/edt_R"
-        android:layout_width="55dp"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/edt_G"
-        android:layout_alignBottom="@+id/edt_G"
-        android:layout_alignRight="@+id/txt_R"
-        android:background="#AAAA0000"
-        android:ems="10"
-        android:inputType="number"
-        android:maxLength="3" />
-
     <SeekBar
         android:id="@+id/skb_G"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/skb_R"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="20dp"
         android:max="255" />
 
     <SeekBar
@@ -100,7 +88,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/skb_G"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="20dp"
         android:max="255" />
 
     <SeekBar
@@ -117,9 +105,9 @@
         android:layout_width="280dp"
         android:layout_height="50dp"
         android:layout_alignLeft="@+id/skb_R"
-        android:layout_alignRight="@+id/txt_B"
         android:layout_below="@+id/edt_G"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="30dp"
+        android:layout_toLeftOf="@+id/edt_B"
         android:background="#000000" />
 
     <Button
@@ -128,19 +116,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/view_color"
+        android:layout_alignLeft="@+id/edt_B"
         android:layout_alignRight="@+id/skb_R"
-        android:layout_toRightOf="@+id/txt_B"
         android:text="Send" />
-
-    <Button
-        android:id="@+id/btn_hk1"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/skb_B"
-        android:layout_below="@+id/skb_B"
-        android:layout_marginTop="15dp"
-        android:text="Key1" />
 
     <Button
         android:id="@+id/btn_hk2"
@@ -163,34 +141,15 @@
         android:text="Key3" />
 
     <Button
-        android:id="@+id/btn_set"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/btn_hk1"
-        android:layout_alignRight="@+id/btn_hk3"
-        android:layout_below="@+id/btn_hk2"
-        android:text="Set" />
-
-    <Button
         android:id="@+id/btn_save"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/btn_hk3"
         android:layout_alignBottom="@+id/btn_hk3"
+        android:layout_alignLeft="@+id/edt_B"
         android:layout_alignRight="@+id/skb_B"
         android:text="Save" />
-
-    <Button
-        android:id="@+id/btn_open"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/btn_save"
-        android:layout_alignBottom="@+id/btn_save"
-        android:layout_toLeftOf="@+id/btn_save"
-        android:text="Open" />
 
     <ToggleButton
         android:id="@+id/tgb_OnOff"
@@ -198,10 +157,51 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/btn_set"
         android:layout_alignBottom="@+id/btn_set"
-        android:layout_alignLeft="@+id/btn_open"
+        android:layout_alignLeft="@+id/btn_save"
         android:layout_alignRight="@+id/btn_save"
+        android:layout_toLeftOf="@+id/btn_save"
         android:checked="false"
         android:clickable="false"
         android:text="ToggleButton" />
+
+    <TextView
+        android:id="@+id/txt_state"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/txt_title"
+        android:layout_alignParentRight="true"
+        android:text="not Connected" />
+
+    <Button
+        android:id="@+id/btn_set"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/btn_hk1"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/btn_hk3"
+        android:layout_marginBottom="10dp"
+        android:text="Set" />
+
+    <Button
+        android:id="@+id/btn_hk1"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btn_set"
+        android:layout_alignLeft="@+id/skb_B"
+        android:text="Key1" />
+
+    <EditText
+        android:id="@+id/edt_R"
+        android:layout_width="55dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/edt_G"
+        android:layout_alignBottom="@+id/edt_G"
+        android:layout_alignRight="@+id/txt_R"
+        android:background="#AAAA0000"
+        android:ems="10"
+        android:inputType="number"
+        android:maxLength="3" />
 
 </RelativeLayout>

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">LED</string>
+    <string name="app_name">K&amp;J</string>
     <string name="hello_world">Hello world!</string>
     <string name="dialog_save_title">Saving color value</string>
-    <string name="dialog_open_title">Colors in db</string>
     <string name="title_section1">Color picker</string>
     <string name="title_section2">Database</string>
+    
+    <string name="not_connected">You are not connected to a device</string>
 
 </resources>

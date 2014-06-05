@@ -1,4 +1,4 @@
-package com.project.leccontroller;
+package com.project.ledcontroller;
 
 import android.content.ContentValues;
 import android.content.Context;
