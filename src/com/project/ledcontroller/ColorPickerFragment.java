@@ -41,11 +41,15 @@ public class ColorPickerFragment extends Fragment {
 	static String ARG_STATE = "arg_state";
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		View rootView = inflater.inflate(R.layout.fragment_main, container,
+				false);
 
-		final TextView txt_title = (TextView) rootView.findViewById(R.id.txt_title);
-		final TextView txt_state = (TextView) rootView.findViewById(R.id.txt_state);
+		final TextView txt_title = (TextView) rootView
+				.findViewById(R.id.txt_title);
+		final TextView txt_state = (TextView) rootView
+				.findViewById(R.id.txt_state);
 		txt_title.setText("This is LED color controller.");
 
 		final EditText edt_R = (EditText) rootView.findViewById(R.id.edt_R);
@@ -61,14 +65,19 @@ public class ColorPickerFragment extends Fragment {
 		if (getArguments() != null) {
 			txt_state.setText(getArguments().getString(ARG_STATE));
 			Log.i("getArguments()", "" + getArguments().getString(ARG_STATE));
-			edt_R.setText(Integer.toString(getArguments().getInt(ARG_COLOR_RED)));
-			edt_G.setText(Integer.toString(getArguments().getInt(ARG_COLOR_GREEN)));
-			edt_B.setText(Integer.toString(getArguments().getInt(ARG_COLOR_BLUE)));
+			edt_R.setText(Integer
+					.toString(getArguments().getInt(ARG_COLOR_RED)));
+			edt_G.setText(Integer.toString(getArguments().getInt(
+					ARG_COLOR_GREEN)));
+			edt_B.setText(Integer.toString(getArguments()
+					.getInt(ARG_COLOR_BLUE)));
 			skb_R.setProgress(getArguments().getInt(ARG_COLOR_RED));
 			skb_G.setProgress(getArguments().getInt(ARG_COLOR_GREEN));
 			skb_B.setProgress(getArguments().getInt(ARG_COLOR_BLUE));
-			view_color.setBackgroundColor(Color.rgb(getArguments().getInt(ARG_COLOR_RED),
-					getArguments().getInt(ARG_COLOR_GREEN), getArguments().getInt(ARG_COLOR_BLUE)));
+			view_color.setBackgroundColor(Color.rgb(
+					getArguments().getInt(ARG_COLOR_RED), getArguments()
+							.getInt(ARG_COLOR_GREEN),
+					getArguments().getInt(ARG_COLOR_BLUE)));
 
 		} else {
 			txt_state.setText("not Connected");
@@ -83,7 +92,8 @@ public class ColorPickerFragment extends Fragment {
 
 		Button btn_confirm = (Button) rootView.findViewById(R.id.btn_confirm);
 
-		final ToggleButton tgb_OnOff = (ToggleButton) rootView.findViewById(R.id.tgb_OnOff);
+		final ToggleButton tgb_OnOff = (ToggleButton) rootView
+				.findViewById(R.id.tgb_OnOff);
 
 		Button btn_hk1 = (Button) rootView.findViewById(R.id.btn_hk1);
 		Button btn_hk2 = (Button) rootView.findViewById(R.id.btn_hk2);
@@ -120,7 +130,8 @@ public class ColorPickerFragment extends Fragment {
 		OnEditorActionListener OEAL = new OnEditorActionListener() {
 
 			@Override
-			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+			public boolean onEditorAction(TextView v, int actionId,
+					KeyEvent event) {
 				// TODO Auto-generated method stub
 				if (actionId == EditorInfo.IME_ACTION_DONE) {
 					int red = 0, green = 0, blue = 0;
@@ -165,55 +176,94 @@ public class ColorPickerFragment extends Fragment {
 			}
 
 			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
 				// TODO Auto-generated method stub
-
+				Log.i("beforeTextChanged", "CharSequence: " + s + " start: "
+						+ start + " count: " + count + " after: " + after);
+				// Log.i("beforeTextChanged",
+				// "This method is called to notify you that, within "
+				// + s
+				// + ", the "
+				// + count
+				// + " characters beginning at "
+				// + start
+				// + " are about to be replaced by new text with length "
+				// + after
+				// +
+				// ". It is an error to attempt to make changes to s from this callback.");
 			}
 
 			@Override
-			public void onTextChanged(CharSequence s, int start, int before, int count) {
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
 				// TODO Auto-generated method stub
-				if (start > 1) {
-					int num = Integer.parseInt(s.toString());
-					if (num > 255) {
-						s = "255";
-					}
-					return;
-				}
+				Log.i("onTextChanged", "CharSequence: " + s + " start: "
+						+ start + " before: " + before + " count: " + count);
+				// Log.i("onTextChanged",
+				// "This method is called to notify you that, within "
+				// + s
+				// + ", the "
+				// + count
+				// + " characters beginning at "
+				// + start
+				// + " have just replaced old text that had length "
+				// + before
+				// +
+				// ". It is an error to attempt to make changes to s from this callback.");
 			}
 
 			@Override
 			public void afterTextChanged(Editable s) {
 				// TODO Auto-generated method stub
-				if (s != null && !s.equals("")) {
-					int a = 0;
-					try {
-						a = Integer.parseInt(s.toString());
-					} catch (NumberFormatException e) {
-						// TODO Auto-generated catch block
-						a = 0;
-					}
-					if (a > 255) {
-						switch (view.getId()) {
-						case R.id.edt_R:
-							edt_R.setText("255");
-							break;
-						case R.id.edt_G:
-							edt_G.setText("255");
-							break;
-						case R.id.edt_B:
-							edt_B.setText("255");
-							break;
-						}
-					}
-					return;
+				Log.i("afterTextChanged", "Editable: " + s);
+				int num = 0;
+				try {
+					num = Integer.parseInt(s.toString());
+				} catch (Exception e) {
+					num = 0;
 				}
+
+				if (num > 255) {
+					// s = "255";
+					switch (view.getId()) {
+					case R.id.edt_R:
+						edt_R.setText("255");
+						skb_R.setProgress(255);
+						break;
+					case R.id.edt_G:
+						edt_G.setText("255");
+						skb_G.setProgress(255);
+						break;
+					case R.id.edt_B:
+						edt_B.setText("255");
+						skb_B.setProgress(255);
+						break;
+					}
+				} else if (num > -1) {
+					switch (view.getId()) {
+					case R.id.edt_R:
+						skb_R.setProgress(num);
+						edt_R.setSelection(s.length());
+						break;
+					case R.id.edt_G:
+						skb_G.setProgress(num);
+						edt_G.setSelection(s.length());
+						break;
+					case R.id.edt_B:
+						skb_B.setProgress(num);
+						edt_B.setSelection(s.length());
+						break;
+					}
+				}
+				//0的問題待處理
+				return;
 			}
 
 		}
-		edt_R.setOnEditorActionListener(OEAL);
-		edt_G.setOnEditorActionListener(OEAL);
-		edt_B.setOnEditorActionListener(OEAL);
+		// edt_R.setOnEditorActionListener(OEAL);
+		// edt_G.setOnEditorActionListener(OEAL);
+		// edt_B.setOnEditorActionListener(OEAL);
 		edt_R.addTextChangedListener(new customTextWatcher(edt_R));
 		edt_G.addTextChangedListener(new customTextWatcher(edt_G));
 		edt_B.addTextChangedListener(new customTextWatcher(edt_B));
@@ -234,7 +284,8 @@ public class ColorPickerFragment extends Fragment {
 			}
 
 			@Override
-			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+			public void onProgressChanged(SeekBar seekBar, int progress,
+					boolean fromUser) {
 				// TODO Auto-generated method stub
 				String txt_progress = String.valueOf(progress);
 				txt_title.setText("K&J");
@@ -243,19 +294,24 @@ public class ColorPickerFragment extends Fragment {
 					edt_R.setText(txt_progress);
 					edt_G.setText("" + skb_G.getProgress());
 					edt_B.setText("" + skb_B.getProgress());
-					view_color.setBackgroundColor(Color.rgb(progress, skb_G.getProgress(), skb_B.getProgress()));
+					view_color.setBackgroundColor(Color.rgb(progress,
+							skb_G.getProgress(), skb_B.getProgress()));
 					break;
 				case R.id.skb_G:
 					edt_R.setText("" + skb_R.getProgress());
 					edt_G.setText(txt_progress);
 					edt_B.setText("" + skb_B.getProgress());
-					view_color.setBackgroundColor(Color.rgb(skb_R.getProgress(), progress, skb_B.getProgress()));
+					view_color
+							.setBackgroundColor(Color.rgb(skb_R.getProgress(),
+									progress, skb_B.getProgress()));
 					break;
 				case R.id.skb_B:
 					edt_R.setText("" + skb_R.getProgress());
 					edt_G.setText("" + skb_G.getProgress());
 					edt_B.setText(txt_progress);
-					view_color.setBackgroundColor(Color.rgb(skb_R.getProgress(), skb_G.getProgress(), progress));
+					view_color
+							.setBackgroundColor(Color.rgb(skb_R.getProgress(),
+									skb_G.getProgress(), progress));
 					break;
 				}
 
@@ -284,7 +340,8 @@ public class ColorPickerFragment extends Fragment {
 					gg = Integer.parseInt(g);
 				} catch (Exception e) {
 					goodToGo = false;
-					Toast toast = Toast.makeText((MainActivity) getActivity(), "尚未填妥顏色", Toast.LENGTH_LONG);
+					Toast toast = Toast.makeText((MainActivity) getActivity(),
+							"尚未填妥顏色", Toast.LENGTH_LONG);
 					toast.show();
 
 				}
@@ -330,7 +387,8 @@ public class ColorPickerFragment extends Fragment {
 		OnCheckedChangeListener OnOffListener = new OnCheckedChangeListener() {
 
 			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+			public void onCheckedChanged(CompoundButton buttonView,
+					boolean isChecked) {
 				// TODO Auto-generated method stub
 				if (isChecked) {
 					((MainActivity) getActivity()).sendMessage(last_r);
@@ -351,31 +409,41 @@ public class ColorPickerFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				SharedPreferences settings = (SharedPreferences) getActivity().getSharedPreferences("Preference", 0);
+				SharedPreferences settings = (SharedPreferences) getActivity()
+						.getSharedPreferences("Preference", 0);
 				int hk_r, hk_g, hk_b;
 				switch (v.getId()) {
 				case R.id.btn_hk1:
-					hk_r = Integer.parseInt(settings.getString("hotkey0_R", "0"));
-					hk_g = Integer.parseInt(settings.getString("hotkey0_G", "0"));
-					hk_b = Integer.parseInt(settings.getString("hotkey0_B", "0"));
+					hk_r = Integer.parseInt(settings
+							.getString("hotkey0_R", "0"));
+					hk_g = Integer.parseInt(settings
+							.getString("hotkey0_G", "0"));
+					hk_b = Integer.parseInt(settings
+							.getString("hotkey0_B", "0"));
 					skb_R.setProgress(hk_r);
 					skb_G.setProgress(hk_g);
 					skb_B.setProgress(hk_b);
 					txt_title.setText("K&J Current state: Hotkey1");
 					break;
 				case R.id.btn_hk2:
-					hk_r = Integer.parseInt(settings.getString("hotkey1_R", "0"));
-					hk_g = Integer.parseInt(settings.getString("hotkey1_G", "0"));
-					hk_b = Integer.parseInt(settings.getString("hotkey1_B", "0"));
+					hk_r = Integer.parseInt(settings
+							.getString("hotkey1_R", "0"));
+					hk_g = Integer.parseInt(settings
+							.getString("hotkey1_G", "0"));
+					hk_b = Integer.parseInt(settings
+							.getString("hotkey1_B", "0"));
 					skb_R.setProgress(hk_r);
 					skb_G.setProgress(hk_g);
 					skb_B.setProgress(hk_b);
 					txt_title.setText("K&J Current state: Hotkey2");
 					break;
 				case R.id.btn_hk3:
-					hk_r = Integer.parseInt(settings.getString("hotkey2_R", "0"));
-					hk_g = Integer.parseInt(settings.getString("hotkey2_G", "0"));
-					hk_b = Integer.parseInt(settings.getString("hotkey2_B", "0"));
+					hk_r = Integer.parseInt(settings
+							.getString("hotkey2_R", "0"));
+					hk_g = Integer.parseInt(settings
+							.getString("hotkey2_G", "0"));
+					hk_b = Integer.parseInt(settings
+							.getString("hotkey2_B", "0"));
 					skb_R.setProgress(hk_r);
 					skb_G.setProgress(hk_g);
 					skb_B.setProgress(hk_b);
@@ -383,7 +451,8 @@ public class ColorPickerFragment extends Fragment {
 					break;
 				case R.id.btn_set:
 					String[] items = { "Hotkey1", "Hotkey2", "Hotkey3" };
-					AlertDialog.Builder adBuilder = new AlertDialog.Builder((MainActivity) getActivity());
+					AlertDialog.Builder adBuilder = new AlertDialog.Builder(
+							(MainActivity) getActivity());
 					adBuilder.setTitle("Set Hotkey");
 					adBuilder.setItems(items, adSetListener);
 					adBuilder.setNegativeButton("Cancel", null);
@@ -406,10 +475,14 @@ public class ColorPickerFragment extends Fragment {
 					g = edt_G.getText().toString();
 					b = edt_B.getText().toString();
 					// 存入數值
-					settings.edit().putString("hotkey" + which + "_R", r).commit();
-					settings.edit().putString("hotkey" + which + "_G", g).commit();
-					settings.edit().putString("hotkey" + which + "_B", b).commit();
-					txt_title.setText("K&J Current state: Hotkey" + (which + 1));
+					settings.edit().putString("hotkey" + which + "_R", r)
+							.commit();
+					settings.edit().putString("hotkey" + which + "_G", g)
+							.commit();
+					settings.edit().putString("hotkey" + which + "_B", b)
+							.commit();
+					txt_title
+							.setText("K&J Current state: Hotkey" + (which + 1));
 				}
 			};
 		};
@@ -430,10 +503,14 @@ public class ColorPickerFragment extends Fragment {
 					int save_g = Integer.parseInt(edt_G.getText().toString());
 					int save_b = Integer.parseInt(edt_B.getText().toString());
 
-					((MainActivity) getActivity()).mSaveDialog = new Dialog(getActivity());
-					((MainActivity) getActivity()).mSaveDialog.setTitle(R.string.dialog_save_title);
-					((MainActivity) getActivity()).mSaveDialog.setCancelable(false);
-					((MainActivity) getActivity()).mSaveDialog.setContentView(R.layout.dialog_db_save);
+					((MainActivity) getActivity()).mSaveDialog = new Dialog(
+							getActivity());
+					((MainActivity) getActivity()).mSaveDialog
+							.setTitle(R.string.dialog_save_title);
+					((MainActivity) getActivity()).mSaveDialog
+							.setCancelable(false);
+					((MainActivity) getActivity()).mSaveDialog
+							.setContentView(R.layout.dialog_db_save);
 
 					final EditText dialog_s_edt_name = (EditText) ((MainActivity) getActivity()).mSaveDialog
 							.findViewById(R.id.dialog_s_edt_name);
@@ -446,57 +523,77 @@ public class ColorPickerFragment extends Fragment {
 					Button dialog_s_btn_cancel = (Button) ((MainActivity) getActivity()).mSaveDialog
 							.findViewById(R.id.dialog_s_btn_cancel);
 
-					dialog_s_view_color.setBackgroundColor(Color.rgb(save_r, save_g, save_b));
-					dialog_s_txt_rgb.setText("R: " + save_r + " | G: " + save_g + " | B: " + save_b);
+					dialog_s_view_color.setBackgroundColor(Color.rgb(save_r,
+							save_g, save_b));
+					dialog_s_txt_rgb.setText("R: " + save_r + " | G: " + save_g
+							+ " | B: " + save_b);
 
-					dialog_s_btn_confirm.setOnClickListener(new OnClickListener() {
+					dialog_s_btn_confirm
+							.setOnClickListener(new OnClickListener() {
 
-						@Override
-						public void onClick(View v) {
-							// TODO Auto-generated method stub
-							switch (v.getId()) {
-							case R.id.dialog_s_btn_confirm:
-								String name = dialog_s_edt_name.getText().toString();
-								if (name.equals("")) {
-									Toast emptyName = Toast.makeText(getActivity(), "Have to input name!",
-											Toast.LENGTH_SHORT);
-									emptyName.show();
-									break;
+								@Override
+								public void onClick(View v) {
+									// TODO Auto-generated method stub
+									switch (v.getId()) {
+									case R.id.dialog_s_btn_confirm:
+										String name = dialog_s_edt_name
+												.getText().toString();
+										if (name.equals("")) {
+											Toast emptyName = Toast.makeText(
+													getActivity(),
+													"Have to input name!",
+													Toast.LENGTH_SHORT);
+											emptyName.show();
+											break;
+										}
+										String red = edt_R.getText().toString();
+										String green = edt_G.getText()
+												.toString();
+										String blue = edt_B.getText()
+												.toString();
+
+										String[] columnsValue = { name, red,
+												green, blue };
+
+										DataBaseHelper DBhelper = new DataBaseHelper(
+												getActivity());
+										DBhelper.openDataBase(getActivity());
+										try {
+											DBhelper.insert(DATABASE_TABLE_1,
+													columnsValue);
+											Toast SuccessToast = Toast
+													.makeText(
+															getActivity(),
+															"Saving Successful!",
+															Toast.LENGTH_SHORT);
+											SuccessToast.show();
+										} catch (Exception e) {
+											e.printStackTrace();
+											Toast ErrorToast = Toast.makeText(
+													getActivity(),
+													"Saving DB Error!",
+													Toast.LENGTH_SHORT);
+
+											ErrorToast.show();
+										}
+										DBhelper.close();
+										((MainActivity) getActivity())
+												.settingChange();
+										((MainActivity) getActivity()).mSaveDialog
+												.dismiss();
+									}
 								}
-								String red = edt_R.getText().toString();
-								String green = edt_G.getText().toString();
-								String blue = edt_B.getText().toString();
+							});
+					dialog_s_btn_cancel
+							.setOnClickListener(new OnClickListener() {
 
-								String[] columnsValue = { name, red, green, blue };
-
-								DataBaseHelper DBhelper = new DataBaseHelper(getActivity());
-								DBhelper.openDataBase(getActivity());
-								try {
-									DBhelper.insert(DATABASE_TABLE_1, columnsValue);
-									Toast SuccessToast = Toast.makeText(getActivity(), "Saving Successful!",
-											Toast.LENGTH_SHORT);
-									SuccessToast.show();
-								} catch (Exception e) {
-									e.printStackTrace();
-									Toast ErrorToast = Toast.makeText(getActivity(), "Saving DB Error!",
-											Toast.LENGTH_SHORT);
-
-									ErrorToast.show();
+								@Override
+								public void onClick(View v) {
+									// TODO Auto-generated method stub
+									((MainActivity) getActivity()).mSaveDialog
+											.dismiss();
 								}
-								DBhelper.close();
-								((MainActivity) getActivity()).settingChange();
-								((MainActivity) getActivity()).mSaveDialog.dismiss();
-							}
-						}
-					});
-					dialog_s_btn_cancel.setOnClickListener(new OnClickListener() {
-
-						@Override
-						public void onClick(View v) {
-							// TODO Auto-generated method stub
-							((MainActivity) getActivity()).mSaveDialog.dismiss();
-						}
-					});
+							});
 					((MainActivity) getActivity()).mSaveDialog.show();
 				}
 			}
