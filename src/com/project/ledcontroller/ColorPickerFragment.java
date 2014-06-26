@@ -46,7 +46,6 @@ public class ColorPickerFragment extends Fragment {
 
 		final TextView txt_title = (TextView) rootView.findViewById(R.id.txt_title);
 		final TextView txt_state = (TextView) rootView.findViewById(R.id.txt_state);
-		txt_title.setText("This is LED color controller.");
 
 		final EditText edt_R = (EditText) rootView.findViewById(R.id.edt_R);
 		final EditText edt_G = (EditText) rootView.findViewById(R.id.edt_G);
@@ -71,7 +70,7 @@ public class ColorPickerFragment extends Fragment {
 					getArguments().getInt(ARG_COLOR_GREEN), getArguments().getInt(ARG_COLOR_BLUE)));
 
 		} else {
-			txt_state.setText("not Connected");
+			txt_state.setText("Not connected");
 			edt_R.setText("0");
 			edt_G.setText("0");
 			edt_B.setText("0");
@@ -88,6 +87,8 @@ public class ColorPickerFragment extends Fragment {
 		Button btn_hk1 = (Button) rootView.findViewById(R.id.btn_hk1);
 		Button btn_hk2 = (Button) rootView.findViewById(R.id.btn_hk2);
 		Button btn_hk3 = (Button) rootView.findViewById(R.id.btn_hk3);
+		Button btn_hk4 = (Button) rootView.findViewById(R.id.btn_hk4);
+		Button btn_hk5 = (Button) rootView.findViewById(R.id.btn_hk5);
 		Button btn_set = (Button) rootView.findViewById(R.id.btn_set);
 		Button btn_save = (Button) rootView.findViewById(R.id.btn_save);
 
@@ -309,13 +310,13 @@ public class ColorPickerFragment extends Fragment {
 					((MainActivity) getActivity()).sendMessage(last_g);
 					((MainActivity) getActivity()).sendMessage(last_b);
 
-					if (txt_state.getText().equals("Connected")) {
-						tgb_OnOff.setChecked(true);
-						tgb_OnOff.setClickable(true);
-					} else {
-						tgb_OnOff.setChecked(false);
-						tgb_OnOff.setClickable(false);
-					}
+//					if (txt_state.getText().equals("Connected")) {
+//						tgb_OnOff.setChecked(true);
+//						tgb_OnOff.setClickable(true);
+//					} else {
+//						tgb_OnOff.setChecked(false);
+//						tgb_OnOff.setClickable(false);
+//					}
 				}
 			}
 		};
@@ -328,13 +329,19 @@ public class ColorPickerFragment extends Fragment {
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				// TODO Auto-generated method stub
 				if (isChecked) {
-					((MainActivity) getActivity()).sendMessage(last_r);
-					((MainActivity) getActivity()).sendMessage(last_g);
-					((MainActivity) getActivity()).sendMessage(last_b);
+//					((MainActivity) getActivity()).sendMessage(last_r);
+//					((MainActivity) getActivity()).sendMessage(last_g);
+//					((MainActivity) getActivity()).sendMessage(last_b);
+					skb_R.setProgress(255);
+					skb_G.setProgress(255);
+					skb_B.setProgress(255);
 				} else {
-					((MainActivity) getActivity()).sendMessage("@001,000#");
-					((MainActivity) getActivity()).sendMessage("@002,000#");
-					((MainActivity) getActivity()).sendMessage("@003,000#");
+//					((MainActivity) getActivity()).sendMessage("@001,000#");
+//					((MainActivity) getActivity()).sendMessage("@002,000#");
+//					((MainActivity) getActivity()).sendMessage("@003,000#");
+					skb_R.setProgress(0);
+					skb_G.setProgress(0);
+					skb_B.setProgress(0);
 				}
 			}
 		};
@@ -350,36 +357,54 @@ public class ColorPickerFragment extends Fragment {
 				int hk_r, hk_g, hk_b;
 				switch (v.getId()) {
 				case R.id.btn_hk1:
-					hk_r = Integer.parseInt(settings.getString("hotkey0_R", "0"));
-					hk_g = Integer.parseInt(settings.getString("hotkey0_G", "0"));
-					hk_b = Integer.parseInt(settings.getString("hotkey0_B", "0"));
+					hk_r = Integer.parseInt(settings.getString("key0_R", "0"));
+					hk_g = Integer.parseInt(settings.getString("key0_G", "0"));
+					hk_b = Integer.parseInt(settings.getString("key0_B", "0"));
 					skb_R.setProgress(hk_r);
 					skb_G.setProgress(hk_g);
 					skb_B.setProgress(hk_b);
-					txt_title.setText("K&J Current state: Hotkey1");
+					txt_title.setText("K&J Current state: Key1");
 					break;
 				case R.id.btn_hk2:
-					hk_r = Integer.parseInt(settings.getString("hotkey1_R", "0"));
-					hk_g = Integer.parseInt(settings.getString("hotkey1_G", "0"));
-					hk_b = Integer.parseInt(settings.getString("hotkey1_B", "0"));
+					hk_r = Integer.parseInt(settings.getString("key1_R", "0"));
+					hk_g = Integer.parseInt(settings.getString("key1_G", "0"));
+					hk_b = Integer.parseInt(settings.getString("key1_B", "0"));
 					skb_R.setProgress(hk_r);
 					skb_G.setProgress(hk_g);
 					skb_B.setProgress(hk_b);
-					txt_title.setText("K&J Current state: Hotkey2");
+					txt_title.setText("K&J Current state: Key2");
 					break;
 				case R.id.btn_hk3:
-					hk_r = Integer.parseInt(settings.getString("hotkey2_R", "0"));
-					hk_g = Integer.parseInt(settings.getString("hotkey2_G", "0"));
-					hk_b = Integer.parseInt(settings.getString("hotkey2_B", "0"));
+					hk_r = Integer.parseInt(settings.getString("key2_R", "0"));
+					hk_g = Integer.parseInt(settings.getString("key2_G", "0"));
+					hk_b = Integer.parseInt(settings.getString("key2_B", "0"));
 					skb_R.setProgress(hk_r);
 					skb_G.setProgress(hk_g);
 					skb_B.setProgress(hk_b);
-					txt_title.setText("K&J Current state: Hotkey3");
+					txt_title.setText("K&J Current state: Key3");
+					break;
+				case R.id.btn_hk4:
+					hk_r = Integer.parseInt(settings.getString("key3_R", "0"));
+					hk_g = Integer.parseInt(settings.getString("key3_G", "0"));
+					hk_b = Integer.parseInt(settings.getString("key3_B", "0"));
+					skb_R.setProgress(hk_r);
+					skb_G.setProgress(hk_g);
+					skb_B.setProgress(hk_b);
+					txt_title.setText("K&J Current state: Key4");
+					break;
+				case R.id.btn_hk5:
+					hk_r = Integer.parseInt(settings.getString("key4_R", "0"));
+					hk_g = Integer.parseInt(settings.getString("key4_G", "0"));
+					hk_b = Integer.parseInt(settings.getString("key4_B", "0"));
+					skb_R.setProgress(hk_r);
+					skb_G.setProgress(hk_g);
+					skb_B.setProgress(hk_b);
+					txt_title.setText("K&J Current state: Key5");
 					break;
 				case R.id.btn_set:
-					String[] items = { "Hotkey1", "Hotkey2", "Hotkey3" };
+					String[] items = { "Key1", "Key2", "Key3", "Key4", "Key5" };
 					AlertDialog.Builder adBuilder = new AlertDialog.Builder((MainActivity) getActivity());
-					adBuilder.setTitle("Set Hotkey");
+					adBuilder.setTitle("Set key");
 					adBuilder.setItems(items, adSetListener);
 					adBuilder.setNegativeButton("Cancel", null);
 					adBuilder.create().show();
@@ -401,16 +426,18 @@ public class ColorPickerFragment extends Fragment {
 					g = edt_G.getText().toString();
 					b = edt_B.getText().toString();
 					// 存入數值
-					settings.edit().putString("hotkey" + which + "_R", r).commit();
-					settings.edit().putString("hotkey" + which + "_G", g).commit();
-					settings.edit().putString("hotkey" + which + "_B", b).commit();
-					txt_title.setText("K&J Current state: Hotkey" + (which + 1));
+					settings.edit().putString("key" + which + "_R", r).commit();
+					settings.edit().putString("key" + which + "_G", g).commit();
+					settings.edit().putString("key" + which + "_B", b).commit();
+					txt_title.setText("K&J Current state: Key" + (which + 1));
 				}
 			};
 		};
 		btn_hk1.setOnClickListener(HK_OCL);
 		btn_hk2.setOnClickListener(HK_OCL);
 		btn_hk3.setOnClickListener(HK_OCL);
+		btn_hk4.setOnClickListener(HK_OCL);
+		btn_hk5.setOnClickListener(HK_OCL);
 		btn_set.setOnClickListener(HK_OCL);
 
 		// 資料庫開起儲存

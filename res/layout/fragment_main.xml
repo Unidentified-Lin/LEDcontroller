@@ -14,9 +14,10 @@
         android:id="@+id/txt_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:focusable="false"
         android:focusableInTouchMode="false"
-        android:text="@string/hello_world" />
+        android:text="@string/app_name" />
 
     <TextView
         android:id="@+id/txt_G"
@@ -24,10 +25,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/txt_title"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
         android:focusable="false"
         android:focusableInTouchMode="true"
-        android:text="Gà CH2"
+        android:text="CH2"
         android:textSize="@dimen/RGB_text_size" />
 
     <TextView
@@ -39,7 +39,7 @@
         android:layout_toLeftOf="@+id/txt_G"
         android:focusable="false"
         android:focusableInTouchMode="false"
-        android:text="Rà CH1"
+        android:text="CH1"
         android:textSize="@dimen/RGB_text_size" />
 
     <EditText
@@ -48,12 +48,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/txt_G"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:background="#AA00AA00"
         android:ems="10"
         android:inputType="number"
         android:maxLength="3" >
-
     </EditText>
 
     <TextView
@@ -65,7 +62,7 @@
         android:layout_toRightOf="@+id/txt_G"
         android:focusable="false"
         android:focusableInTouchMode="false"
-        android:text="Bà CH3"
+        android:text="CH3"
         android:textSize="@dimen/RGB_text_size" />
 
     <EditText
@@ -76,7 +73,6 @@
         android:layout_alignBottom="@+id/edt_G"
         android:layout_alignLeft="@+id/txt_B"
         android:layout_toRightOf="@+id/edt_G"
-        android:background="#AA0000AA"
         android:ems="10"
         android:inputType="number"
         android:maxLength="3" />
@@ -87,7 +83,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/skb_R"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:max="255" />
 
     <SeekBar
@@ -96,7 +92,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/skb_G"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:max="255" />
 
     <SeekBar
@@ -105,7 +101,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/view_color"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:max="255" />
 
     <View
@@ -114,7 +110,7 @@
         android:layout_height="50dp"
         android:layout_alignLeft="@+id/skb_R"
         android:layout_below="@+id/edt_G"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:layout_toLeftOf="@+id/edt_B"
         android:background="#000000"
         android:focusable="false"
@@ -125,54 +121,10 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/view_color"
+        android:layout_alignTop="@+id/view_color"
         android:layout_alignLeft="@+id/edt_B"
         android:layout_alignRight="@+id/skb_R"
         android:text="Send" />
-
-    <Button
-        android:id="@+id/btn_hk2"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/btn_hk1"
-        android:layout_alignBottom="@+id/btn_hk1"
-        android:layout_toRightOf="@+id/btn_hk1"
-        android:text="Key2" />
-
-    <Button
-        android:id="@+id/btn_hk3"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/btn_hk2"
-        android:layout_alignBottom="@+id/btn_hk2"
-        android:layout_toRightOf="@+id/btn_hk2"
-        android:text="Key3" />
-
-    <Button
-        android:id="@+id/btn_save"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/btn_hk3"
-        android:layout_alignBottom="@+id/btn_hk3"
-        android:layout_alignLeft="@+id/edt_B"
-        android:layout_alignRight="@+id/skb_B"
-        android:text="Save" />
-
-    <ToggleButton
-        android:id="@+id/tgb_OnOff"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/btn_set"
-        android:layout_alignBottom="@+id/btn_set"
-        android:layout_alignLeft="@+id/btn_save"
-        android:layout_alignRight="@+id/btn_save"
-        android:layout_toLeftOf="@+id/btn_save"
-        android:checked="false"
-        android:clickable="false"
-        android:text="ToggleButton" />
 
     <TextView
         android:id="@+id/txt_state"
@@ -180,27 +132,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/txt_title"
         android:layout_alignParentRight="true"
-        android:text="not Connected" />
-
-    <Button
-        android:id="@+id/btn_set"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/btn_hk1"
-        android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/btn_hk3"
-        android:layout_marginBottom="10dp"
-        android:text="Set" />
-
-    <Button
-        android:id="@+id/btn_hk1"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/btn_set"
-        android:layout_alignLeft="@+id/skb_B"
-        android:text="Key1" />
+        android:text="Not connected" />
 
     <EditText
         android:id="@+id/edt_R"
@@ -209,9 +141,95 @@
         android:layout_alignBaseline="@+id/edt_G"
         android:layout_alignBottom="@+id/edt_G"
         android:layout_alignRight="@+id/txt_R"
-        android:background="#AAAA0000"
         android:ems="10"
         android:inputType="number"
         android:maxLength="3" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/skb_B"
+        android:layout_alignRight="@+id/skb_B"
+        android:layout_below="@+id/skb_B"
+        android:layout_marginTop="15dp"
+        android:orientation="vertical"
+        android:scrollbars="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <Button
+                android:id="@+id/btn_hk1"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:text="Key1" />
+
+            <Button
+                android:id="@+id/btn_hk2"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:text="Key2" />
+
+            <Button
+                android:id="@+id/btn_hk3"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:text="Key3" />
+
+            <Button
+                android:id="@+id/btn_save"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:text="Save" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <Button
+                android:id="@+id/btn_hk4"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:text="Key4" />
+
+            <Button
+                android:id="@+id/btn_hk5"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:text="Key5" />
+
+            <Button
+                android:id="@+id/btn_set"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:text="Set" />
+
+            <ToggleButton
+                android:id="@+id/tgb_OnOff"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:text="ToggleButton"
+                android:textOff="All Off"
+                android:textOn="All On" />
+        </LinearLayout>
+    </LinearLayout>
 
 </RelativeLayout>

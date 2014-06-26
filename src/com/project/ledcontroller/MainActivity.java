@@ -7,58 +7,40 @@ import static com.project.ledcontroller.DataBaseHelper.COLUMN_NAME_1;
 import static com.project.ledcontroller.DataBaseHelper.COLUMN_RED_1;
 import static com.project.ledcontroller.DataBaseHelper.DATABASE_TABLE_1;
 
+import java.lang.reflect.Field;
 import java.util.Set;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.SparseArray;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.View.OnFocusChangeListener;
+import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
-import android.view.inputmethod.EditorInfo;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
-import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.SeekBar;
-import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
-import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 public class MainActivity extends ActionBarActivity implements ActionBar.OnNavigationListener,
 		DatabaseFragment.OnDataSelectedListener {
@@ -176,6 +158,11 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
 						android.R.id.text1, new String[] { getString(R.string.title_section1),
 								getString(R.string.title_section2) }), this);
 
+		/**
+		 * 強制顯示overflow menu
+		 */
+		forceShowActionBarOverflowMenu();
+
 		DBhelper = new DataBaseHelper(this);
 
 		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -283,7 +270,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
 			if (mConnectService.getState() == BluetoothConnectService.STATE_CONNECTED) {
 				args.putString(ColorPickerFragment.ARG_STATE, "Connected");
 			} else if (mConnectService.getState() == BluetoothConnectService.STATE_NONE) {
-				args.putString(ColorPickerFragment.ARG_STATE, "not Connected");
+				args.putString(ColorPickerFragment.ARG_STATE, "Not connected");
 			}
 			CPF.setArguments(args);
 			getSupportFragmentManager().beginTransaction().replace(R.id.container, CPF).commit();
@@ -522,6 +509,20 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
 	public void settingChange() {
 		getBasicInfo();
 		myAdapter.notifyDataSetChanged();
+	}
+
+	private void forceShowActionBarOverflowMenu() {
+		//強制顯示overflow menu
+		try {
+			ViewConfiguration config = ViewConfiguration.get(this);
+			Field menuKeyField = ViewConfiguration.class.getDeclaredField("sHasPermanentMenuKey");
+			if (menuKeyField != null) {
+				menuKeyField.setAccessible(true);
+				menuKeyField.setBoolean(config, false);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void onDataSelect(int position) {

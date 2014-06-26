@@ -90,8 +90,8 @@ public class DatabaseFragment extends Fragment {
 						}
 					}
 				};
-				deleteDialog.setNegativeButton("Cancel", listener);
-				deleteDialog.setPositiveButton("Confirm", listener);
+				deleteDialog.setNegativeButton("No", listener);
+				deleteDialog.setPositiveButton("Yes", listener);
 				deleteDialog.show();
 				return false;
 			}
